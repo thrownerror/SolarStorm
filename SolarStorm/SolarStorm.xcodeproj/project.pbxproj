@@ -15,6 +15,7 @@
 		3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A7D1F73FDC800E126AD /* Main.storyboard */; };
 		3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A801F73FDC800E126AD /* Assets.xcassets */; };
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
+		3F6446981F7401FD008E4C26 /* PlayerShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F6446971F7401FD008E4C26 /* PlayerShip.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3F523A801F73FDC800E126AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A831F73FDC800E126AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F6446971F7401FD008E4C26 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PlayerShip.png; path = ../../../../../Desktop/PlayerShip.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,8 @@
 		3F523A671F73FDC800E126AD = {
 			isa = PBXGroup;
 			children = (
+				3F6446961F7401E4008E4C26 /* Sounds */,
+				3F6446951F7401D0008E4C26 /* ArtAssets */,
 				3F523A721F73FDC800E126AD /* SolarStorm */,
 				3F523A711F73FDC800E126AD /* Products */,
 			);
@@ -71,6 +75,21 @@
 				3F523A851F73FDC800E126AD /* Info.plist */,
 			);
 			path = SolarStorm;
+			sourceTree = "<group>";
+		};
+		3F6446951F7401D0008E4C26 /* ArtAssets */ = {
+			isa = PBXGroup;
+			children = (
+				3F6446971F7401FD008E4C26 /* PlayerShip.png */,
+			);
+			path = ArtAssets;
+			sourceTree = "<group>";
+		};
+		3F6446961F7401E4008E4C26 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,7 +124,7 @@
 				TargetAttributes = {
 					3F523A6F1F73FDC800E126AD = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 66D9TZSAXL;
+						DevelopmentTeam = 25YN25P748;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -137,6 +156,7 @@
 				3F523A761F73FDC800E126AD /* GameScene.sks in Resources */,
 				3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */,
 				3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */,
+				3F6446981F7401FD008E4C26 /* PlayerShip.png in Resources */,
 				3F523A781F73FDC800E126AD /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,11 +295,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66D9TZSAXL;
+				DEVELOPMENT_TEAM = 25YN25P748;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -289,11 +309,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66D9TZSAXL;
+				DEVELOPMENT_TEAM = 25YN25P748;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

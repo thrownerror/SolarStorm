@@ -25,12 +25,17 @@ class GameScene: SKScene {
         self.lastUpdateTime = 0
         
         // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
-        
+      //  self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
+      //  if let label = self.label {
+      //      label.alpha = 0.0
+       //     label.run(SKAction.fadeIn(withDuration: 2.0))
+      //  }
+        let player = SKSpriteNode(imageNamed:"PlayerShip.png")
+        player.xScale = 0.5
+        player.yScale = 0.5
+        player.position = CGPoint(x: 50, y:50)
+        player.zPosition = 0
+        player.name = "player"
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
         self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
@@ -43,6 +48,7 @@ class GameScene: SKScene {
                                               SKAction.fadeOut(withDuration: 0.5),
                                               SKAction.removeFromParent()]))
         }
+        self.addChild(player)
     }
     
     
