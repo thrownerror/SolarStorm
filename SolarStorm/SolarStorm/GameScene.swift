@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var change = true
+    
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
