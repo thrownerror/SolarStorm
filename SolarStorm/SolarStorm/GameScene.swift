@@ -19,6 +19,14 @@ class GameScene: SKScene {
     var circleRadius:Double = 270
     var currentPos = 0
     var levelType:String = "circle"
+    let swipeWindow:CGFloat = 6
+    var leftOfPlayer = false
+    var lastTouch: CGPoint?
+    
+    var enemies: Array<SKSpriteNode> = Array()
+    var enemyTimer:Int = 0
+
+    
     //var player = SKSpriteNode(imageNamed:"PlayerShip.png")
     var player = SKSpriteNode()
     private var lastUpdateTime : TimeInterval = 0
@@ -47,6 +55,7 @@ class GameScene: SKScene {
         fillCGPoints(type: levelType)
        // getCenter()
         
+        //Debug of locations
         for point in playerPoints{
             let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
             tempPlayer.xScale = 0.05
@@ -67,8 +76,8 @@ class GameScene: SKScene {
     
     func createPlayer() -> Void{
         player = SKSpriteNode(imageNamed: "PlayerShip.png")
-        player.xScale = 0.2
-        player.yScale = 0.2
+        player.xScale = 0.01
+        player.yScale = 0.01
         //player.position = playerPoints[0]
         player.zPosition = 0
 
@@ -81,8 +90,13 @@ class GameScene: SKScene {
         self.addChild(player)
     }
     func movePlayer(newPoint: CGPoint){
-        print("Player move func")
+        player.xScale = 0.2
+        player.yScale = 0.2
         player.position = newPoint
+        print("Player move func")
+        let angle = atan2(player.position.y - 0.0, player.position.x - 0.0)
+        let rotateAction = SKAction.rotate(toAngle: angle + CGFloat(Double.pi*0.5), duration: 0.0)
+        player.run(rotateAction)
     }
     
     func fillCGPoints(type: String){
@@ -113,45 +127,103 @@ class GameScene: SKScene {
             
         }
     }
-  /*  func touchDown(atPoint pos : CGPoint) {
+    
+    func createEnemy(){
+        let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
+        enemy.position = CGPoint(x: 0, y: 0)
+        
+        addChild(enemy)
+        
+        let targetPoint = playerPoints[Int(arc4random_uniform(UInt32(playerPoints.count)))]
+        
+        let actionMove = SKAction.move(to: CGPoint(x: targetPoint.x, y: targetPoint.y), duration: TimeInterval(10))
+        
+        enemy.run(actionMove)
+        
+    }
+
+    
+    func distancePoints(a: CGPoint, b: CGPoint) -> CGFloat{
+        let xDistance = a.x - b.x
+        let yDistance = a.y - b.y
+        return CGFloat(sqrt((xDistance * yDistance) + (yDistance * yDistance)))
+    }
+    
+    func touchDown(atPoint pos : CGPoint) {
         /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.green
             self.addChild(n)
         }*/
-       
-        if(currentPos < playerPoints.count){
-            currentPos = currentPos + 1;
-        }
-        if(currentPos == playerPoints.count){
-            currentPos = 0;
-        }
-        print("Current pos: \(currentPos)")
-        movePlayer(newPoint: playerPoints[currentPos])
+        
+        lastTouch = pos
+        //Ask how to write this neater
+
+        print("fire")
     }
-    */
-    func touchDown(sender: UITapGestureRecognizer){
+    /*
+   func touchDown(sender: UITapGestureRecognizer){
+        print("in touch down")
         if sender.state == .ended{
             print("ended")
         }
-    }
+    }*/
+    
     func touchMoved(toPoint pos : CGPoint) {
        /* if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.blue
             self.addChild(n)
-        }*/
+         }*/
+
+        let distanceBetween = distancePoints(a: pos, b: lastTouch!)
+        if(distanceBetween > swipeWindow){
+            if(lastTouch!.x < pos.x){
+                leftOfPlayer = false
+            }
+            else{
+                leftOfPlayer = true
+            }
+            if(leftOfPlayer){
+                if(currentPos < playerPoints.count){
+                    currentPos = currentPos + 1
+                }
+                if(currentPos == playerPoints.count){
+                    currentPos = 0
+                }
+            }
+            else{
+                if(currentPos > 0){
+                    currentPos = currentPos - 1
+                }
+                if(currentPos == 0){
+                    currentPos = playerPoints.count - 1
+                }
+            }
+            if(currentPos == playerPoints.count){
+                currentPos = 0;
+            }
+            print("Current pos: \(currentPos)")
+            movePlayer(newPoint: playerPoints[currentPos])
+            print("swipe?")
+        }
+        
     }
     
     func touchUp(atPoint pos : CGPoint) {
-       /* if let n = self.spinnyNode?.copy() as! SKShapeNode? {
+        /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.red
             self.addChild(n)
         }*/
+        
+        
+        ///remove last touch
+        
     }
     
- /*   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let label = self.label {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
@@ -168,26 +240,10 @@ class GameScene: SKScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        //for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-    */
+ 
     
-    func respondToSwipeGesture(gesture: UIGestureRecognizer){
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer{
-            switch swipeGesture.direction{
-                case UISwipeGestureRecognizerDirection.right:
-                    print("Right")
-                case UISwipeGestureRecognizerDirection.down:
-                    print("Down")
-                case UISwipeGestureRecognizerDirection.left:
-                    print("Left")
-                case UISwipeGestureRecognizerDirection.up:
-                    print("Up:")
-                default:
-                    print("Oh geeze Rick")
-            }
-        }
-    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
@@ -206,5 +262,14 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
+        
+        if enemyTimer >= 120{
+            run(SKAction.repeatForever(SKAction.sequence([SKAction.run(self.createEnemy), SKAction.wait(forDuration: 100.0)])))
+            enemyTimer = 0
+        } else {
+            enemyTimer += 1
+        }
+
+    
     }
 }
