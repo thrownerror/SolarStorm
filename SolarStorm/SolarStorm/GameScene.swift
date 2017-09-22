@@ -15,7 +15,12 @@ class GameScene: SKScene {
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
-    
+    var playerPoints: [CGPoint] = []
+    var circleRadius:Double = 270
+    var currentPos = 0
+    var levelType:String = "circle"
+    //var player = SKSpriteNode(imageNamed:"PlayerShip.png")
+    var player = SKSpriteNode()
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -23,6 +28,7 @@ class GameScene: SKScene {
     override func sceneDidLoad() {
 
         self.lastUpdateTime = 0
+
         
         // Get label node from scene and store it for use later
       //  self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
@@ -30,50 +36,109 @@ class GameScene: SKScene {
       //      label.alpha = 0.0
        //     label.run(SKAction.fadeIn(withDuration: 2.0))
       //  }
-        let player = SKSpriteNode(imageNamed:"PlayerShip.png")
-        player.xScale = 0.5
-        player.yScale = 0.5
-        player.position = CGPoint(x: 50, y:50)
-        player.zPosition = 0
-        player.name = "player"
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+
+      //  var player = SKSpriteNode(imageNamed:"PlayerShip.png")
+      //  player.xScale = 0.2
+      //  player.yScale = 0.2
+      //  player.position = CGPoint(x: 50, y:50)
+      //  player.zPosition = 0
+      //  player.name = "player"
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
+        fillCGPoints(type: levelType)
+
+        
+        for point in playerPoints{
+            let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
+            tempPlayer.xScale = 0.05
+            tempPlayer.yScale = 0.05
+            tempPlayer.position = point
+            tempPlayer.zPosition = 0
+            tempPlayer.name = "tempPlayer"
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+            self.addChild(tempPlayer)
         }
+        createPlayer()
+        
+    }
+    func createPlayer() -> Void{
+        player = SKSpriteNode(imageNamed: "PlayerShip.png")
+        player.xScale = 0.2
+        player.yScale = 0.2
+        player.position = playerPoints[0]
+        player.zPosition = 0
+
+        
+        //let remove = SKAction.removeFromParent()
+        //let move = SKAction.move(to: <#T##CGPoint#>, duration: <#T##TimeInterval#>)
+        //    = SKAction.move(to: <#T##CGPoint#>, duration: <#T##TimeInterval#>)
+       // let moveAndRemove = SKAction.sequence([moveTargets,removeTargets])
+        
         self.addChild(player)
     }
+    func movePlayer(newPoint: CGPoint){
+        print("Player move func")
+        player.position = newPoint
+    }
     
-    
+    func fillCGPoints(type: String){
+        playerPoints.removeAll()
+        if(type == "circle"){
+            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
+            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
+            
+            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
+
+            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            
+            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
+
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            
+        }
+    }
     func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
+        /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.green
             self.addChild(n)
+        }*/
+       
+        if(currentPos < playerPoints.count){
+            currentPos = currentPos + 1;
         }
+        if(currentPos == playerPoints.count){
+            currentPos = 0;
+        }
+        print("Current pos: \(currentPos)")
+        movePlayer(newPoint: playerPoints[currentPos])
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
+       /* if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.blue
             self.addChild(n)
-        }
+        }*/
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
+       /* if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.red
             self.addChild(n)
-        }
+        }*/
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
