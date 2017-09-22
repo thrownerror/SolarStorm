@@ -24,7 +24,7 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-    
+    //var centerPoint : CGPoint
     override func sceneDidLoad() {
 
         self.lastUpdateTime = 0
@@ -45,7 +45,7 @@ class GameScene: SKScene {
       //  player.name = "player"
         
         fillCGPoints(type: levelType)
-
+       // getCenter()
         
         for point in playerPoints{
             let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
@@ -60,11 +60,16 @@ class GameScene: SKScene {
         createPlayer()
         
     }
+    func getCenter() ->Void{
+        //centerPoint = CGPoint(x: (self.height/2), y: (self.width/2))
+      //  centerPoint = CGPoint(x:200,y:200)
+    }
+    
     func createPlayer() -> Void{
         player = SKSpriteNode(imageNamed: "PlayerShip.png")
         player.xScale = 0.2
         player.yScale = 0.2
-        player.position = playerPoints[0]
+        //player.position = playerPoints[0]
         player.zPosition = 0
 
         
@@ -102,13 +107,13 @@ class GameScene: SKScene {
             
             playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
 
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
             
         }
     }
-    func touchDown(atPoint pos : CGPoint) {
+  /*  func touchDown(atPoint pos : CGPoint) {
         /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.green
@@ -124,7 +129,12 @@ class GameScene: SKScene {
         print("Current pos: \(currentPos)")
         movePlayer(newPoint: playerPoints[currentPos])
     }
-    
+    */
+    func touchDown(sender: UITapGestureRecognizer){
+        if sender.state == .ended{
+            print("ended")
+        }
+    }
     func touchMoved(toPoint pos : CGPoint) {
        /* if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
@@ -141,7 +151,7 @@ class GameScene: SKScene {
         }*/
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+ /*   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let label = self.label {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
@@ -160,7 +170,24 @@ class GameScene: SKScene {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
+    */
     
+    func respondToSwipeGesture(gesture: UIGestureRecognizer){
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer{
+            switch swipeGesture.direction{
+                case UISwipeGestureRecognizerDirection.right:
+                    print("Right")
+                case UISwipeGestureRecognizerDirection.down:
+                    print("Down")
+                case UISwipeGestureRecognizerDirection.left:
+                    print("Left")
+                case UISwipeGestureRecognizerDirection.up:
+                    print("Up:")
+                default:
+                    print("Oh geeze Rick")
+            }
+        }
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
