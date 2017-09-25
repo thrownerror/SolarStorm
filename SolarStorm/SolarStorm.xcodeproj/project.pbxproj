@@ -16,6 +16,7 @@
 		3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A801F73FDC800E126AD /* Assets.xcassets */; };
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
 		3FC7AEC71F75CEA600BD89F6 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC7AEC61F75CEA600BD89F6 /* EnemyShip.png */; };
+		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		3F523A831F73FDC800E126AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FC7AEC61F75CEA600BD89F6 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
+		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				3F523A751F73FDC800E126AD /* GameScene.sks */,
 				3F523A771F73FDC800E126AD /* Actions.sks */,
 				3F523A791F73FDC800E126AD /* GameScene.swift */,
+				3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */,
 				3F523A7B1F73FDC800E126AD /* GameViewController.swift */,
 				3F523A7D1F73FDC800E126AD /* Main.storyboard */,
 				3F523A801F73FDC800E126AD /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */,
+				3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */,
 				3F523A761F73FDC800E126AD /* GameScene.sks in Resources */,
 				3FC7AEC71F75CEA600BD89F6 /* EnemyShip.png in Resources */,
 				3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */,

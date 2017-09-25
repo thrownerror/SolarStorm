@@ -19,13 +19,14 @@ class GameScene: SKScene {
     var circleRadius:Double = 270
     var currentPos = 0
     var levelType:String = "circle"
-    let swipeWindow:CGFloat = 6
+    let swipeWindow:CGFloat = 4.5
     var leftOfPlayer = false
     var lastTouch: CGPoint?
     
     var enemies: Array<SKSpriteNode> = Array()
     var enemyTimer:Int = 0
-
+    
+     let actionDelete = SKAction.removeFromParent()
     
     //var player = SKSpriteNode(imageNamed:"PlayerShip.png")
     var player = SKSpriteNode()
@@ -128,7 +129,7 @@ class GameScene: SKScene {
         }
     }
     
-    func createEnemy(){
+    func createEnemy() -> Void{
         let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
         enemy.position = CGPoint(x: 0, y: 0)
         
@@ -138,8 +139,23 @@ class GameScene: SKScene {
         
         let actionMove = SKAction.move(to: CGPoint(x: targetPoint.x, y: targetPoint.y), duration: TimeInterval(10))
         
-        enemy.run(actionMove)
+        enemy.run(SKAction.sequence([actionMove, actionDelete]))
         
+    }
+    
+    func fireProjectile(){
+        let center = CGPoint(x: 0, y: 0)
+        
+        let bullet = SKEmitterNode(fileNamed: "PlayerBullet")!
+        bullet.position = playerPoints[currentPos]
+        let angle = atan2(bullet.position.y - 0.0, bullet.position.x - 0.0) + CGFloat(Double.pi)
+        bullet.zRotation = angle
+        
+        addChild(bullet)
+        
+        let actionMove = SKAction.move(to: center, duration: TimeInterval(2))
+        
+        bullet.run(SKAction.sequence([actionMove, actionDelete]))
     }
 
     
@@ -157,6 +173,8 @@ class GameScene: SKScene {
         }*/
         
         lastTouch = pos
+        fireProjectile()
+        
         //Ask how to write this neater
 
         print("fire")
@@ -203,6 +221,7 @@ class GameScene: SKScene {
             if(currentPos == playerPoints.count){
                 currentPos = 0;
             }
+            lastTouch = pos
             print("Current pos: \(currentPos)")
             movePlayer(newPoint: playerPoints[currentPos])
             print("swipe?")
@@ -263,8 +282,8 @@ class GameScene: SKScene {
         
         self.lastUpdateTime = currentTime
         
-        if enemyTimer >= 120{
-            run(SKAction.repeatForever(SKAction.sequence([SKAction.run(self.createEnemy), SKAction.wait(forDuration: 100.0)])))
+        if enemyTimer >= 180{
+            createEnemy()
             enemyTimer = 0
         } else {
             enemyTimer += 1
