@@ -9,58 +9,70 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+struct PhysicsCategory {
+    static let None: UInt32 = 0
+    static let All: UInt32 = UInt32.max
+    static let Enemy: UInt32 = 0b1
+    static let Projectile: UInt32 = 0b10
+}
+
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var change = true
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     var playerPoints: [CGPoint] = []
+    
+    //radius of play area
     var circleRadius:Double = 270
+    
+    //location of player
     var currentPos = 0
+    
+    //initial level
     var levelType:String = "circle"
-    let swipeWindow:CGFloat = 4.5
+    
+    //swipe sensitivity
+    let swipeWindow:CGFloat = 6
+    
+    //movement checks
     var leftOfPlayer = false
     var lastTouch: CGPoint?
     
+    //enemy handlers
     var enemies: Array<SKSpriteNode> = Array()
     var enemyTimer:Int = 0
     
-     let actionDelete = SKAction.removeFromParent()
+    let actionDelete = SKAction.removeFromParent()
     
     //var player = SKSpriteNode(imageNamed:"PlayerShip.png")
+    
+    //player properties
     var player = SKSpriteNode()
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    
+    //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
+    
     override func sceneDidLoad() {
 
         self.lastUpdateTime = 0
+        
+        physicsWorld.gravity = CGVector.zero
+        physicsWorld.contactDelegate = self
 
         
-        // Get label node from scene and store it for use later
-      //  self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-      //  if let label = self.label {
-      //      label.alpha = 0.0
-       //     label.run(SKAction.fadeIn(withDuration: 2.0))
-      //  }
-
-      //  var player = SKSpriteNode(imageNamed:"PlayerShip.png")
-      //  player.xScale = 0.2
-      //  player.yScale = 0.2
-      //  player.position = CGPoint(x: 50, y:50)
-      //  player.zPosition = 0
-      //  player.name = "player"
-        
+     
         fillCGPoints(type: levelType)
-       // getCenter()
         
-        //Debug of locations
+        //Debug of locations for representative points - sprites are placeholders
         for point in playerPoints{
             let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
-            tempPlayer.xScale = 0.05
-            tempPlayer.yScale = 0.05
+            tempPlayer.xScale = 0.01
+            tempPlayer.yScale = 0.01
             tempPlayer.position = point
             tempPlayer.zPosition = 0
             tempPlayer.name = "tempPlayer"
@@ -71,12 +83,15 @@ class GameScene: SKScene {
         
     }
     func getCenter() ->Void{
+        //Header incase of need to get center of screen
         //centerPoint = CGPoint(x: (self.height/2), y: (self.width/2))
       //  centerPoint = CGPoint(x:200,y:200)
     }
     
+    //Create player ship and set it appropriatley - Robert
     func createPlayer() -> Void{
         player = SKSpriteNode(imageNamed: "PlayerShip.png")
+        //Bug - starts tiny on center of screen - need to ask Jefferson
         player.xScale = 0.01
         player.yScale = 0.01
         //player.position = playerPoints[0]
@@ -90,9 +105,11 @@ class GameScene: SKScene {
         
         self.addChild(player)
     }
+    
+    //Handles movement of player from one point to another - Robert
     func movePlayer(newPoint: CGPoint){
-        player.xScale = 0.2
-        player.yScale = 0.2
+        player.xScale = 0.1
+        player.yScale = 0.1
         player.position = newPoint
         print("Player move func")
         let angle = atan2(player.position.y - 0.0, player.position.x - 0.0)
@@ -100,6 +117,7 @@ class GameScene: SKScene {
         player.run(rotateAction)
     }
     
+    //Handles CGPoint generation for ship placement each level - Robert
     func fillCGPoints(type: String){
         playerPoints.removeAll()
         if(type == "circle"){
@@ -129,9 +147,18 @@ class GameScene: SKScene {
         }
     }
     
+    //Enemy generation - James
+    
+    //TODO: Invincibility at start so they can't get eliminated by spamming
     func createEnemy() -> Void{
         let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
         enemy.position = CGPoint(x: 0, y: 0)
+        
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy.physicsBody?.isDynamic = true
+        enemy.physicsBody?.categoryBitMask = PhysicsCategory.Enemy
+        enemy.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
+        enemy.physicsBody?.collisionBitMask = PhysicsCategory.None
         
         addChild(enemy)
         
@@ -143,42 +170,60 @@ class GameScene: SKScene {
         
     }
     
+    //Shoot bullet - James
+    //TODO: Make it smalelr so it doesn't hit enemies in other lanes
     func fireProjectile(){
         let center = CGPoint(x: 0, y: 0)
         
+        let projectile = SKSpriteNode(imageNamed: "Projectile.png")
+        projectile.position = playerPoints[currentPos]
+        
         let bullet = SKEmitterNode(fileNamed: "PlayerBullet")!
-        bullet.position = playerPoints[currentPos]
+        bullet.position = center
         let angle = atan2(bullet.position.y - 0.0, bullet.position.x - 0.0) + CGFloat(Double.pi)
         bullet.zRotation = angle
         
-        addChild(bullet)
+        projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
+        projectile.physicsBody?.isDynamic = true
+        projectile.physicsBody?.categoryBitMask = PhysicsCategory.Projectile
+        projectile.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy
+        projectile.physicsBody?.collisionBitMask = PhysicsCategory.None
+        projectile.physicsBody?.usesPreciseCollisionDetection = true
+        
+        addChild(projectile)
+        projectile.addChild(bullet)
         
         let actionMove = SKAction.move(to: center, duration: TimeInterval(2))
         
-        bullet.run(SKAction.sequence([actionMove, actionDelete]))
+        projectile.run(SKAction.sequence([actionMove, actionDelete]))
+    }
+    
+    //Projectile Collision - James
+    func projectileCollision(projectile: SKSpriteNode, enemy: SKSpriteNode) {
+        print("Hit")
+        projectile.removeFromParent()
+        enemy.removeFromParent()
     }
 
-    
+
+    //Distance between two points - Robert
     func distancePoints(a: CGPoint, b: CGPoint) -> CGFloat{
         let xDistance = a.x - b.x
         let yDistance = a.y - b.y
         return CGFloat(sqrt((xDistance * yDistance) + (yDistance * yDistance)))
     }
     
+    //On touch, fire a projectile and get point
     func touchDown(atPoint pos : CGPoint) {
         /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
             n.strokeColor = SKColor.green
             self.addChild(n)
         }*/
-        
         lastTouch = pos
         fireProjectile()
-        
-        //Ask how to write this neater
-
-        print("fire")
     }
+    
     /*
    func touchDown(sender: UITapGestureRecognizer){
         print("in touch down")
@@ -187,6 +232,7 @@ class GameScene: SKScene {
         }
     }*/
     
+    //When touch pos has moved
     func touchMoved(toPoint pos : CGPoint) {
        /* if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
@@ -194,14 +240,18 @@ class GameScene: SKScene {
             self.addChild(n)
          }*/
 
+        //Get Distance between points. If greater than swipe window, treat like a swipe
         let distanceBetween = distancePoints(a: pos, b: lastTouch!)
         if(distanceBetween > swipeWindow){
+            
+            //Use leftOfPlayer to evaluate direction of movement
             if(lastTouch!.x < pos.x){
                 leftOfPlayer = false
             }
             else{
                 leftOfPlayer = true
             }
+            //if left, rotate counter clockwise
             if(leftOfPlayer){
                 if(currentPos < playerPoints.count){
                     currentPos = currentPos + 1
@@ -243,9 +293,9 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
+       // if let label = self.label {
+            //label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+      ///  }
         
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
@@ -290,5 +340,26 @@ class GameScene: SKScene {
         }
 
     
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+    
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if ((firstBody.categoryBitMask & PhysicsCategory.Enemy != 0) && (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0)) {
+            if let enemy = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
+                projectileCollision(projectile: projectile, enemy: enemy)
+            }
+        }
+        
     }
 }
