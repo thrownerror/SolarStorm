@@ -177,11 +177,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let projectile = SKSpriteNode(imageNamed: "Projectile.png")
         projectile.position = playerPoints[currentPos]
+        let angle = atan2(projectile.position.y - 0, projectile.position.x - 0) + CGFloat(Double.pi)
+
+        projectile.zRotation = angle
         
         let bullet = SKEmitterNode(fileNamed: "PlayerBullet")!
         bullet.position = center
-        let angle = atan2(bullet.position.y - 0.0, bullet.position.x - 0.0) + CGFloat(Double.pi)
-        bullet.zRotation = angle
+        //let angle = atan2(bullet.po!!!!!!!!!!sition.y - (self.scene?.position.y)!, bullet.position.x - (self.scene?.position.x)!) + CGFloat(Double.pi)
+        //bullet.zRotation = angle
         
         projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
         projectile.physicsBody?.isDynamic = true
