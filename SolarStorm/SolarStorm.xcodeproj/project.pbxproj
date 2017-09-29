@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F46EC291F79A8710057280E /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F46EC281F79A8710057280E /* Projectile.png */; };
 		3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4858311F7D3EDB00551510 /* Assets.xcassets */; };
 		3F523A741F73FDC800E126AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F523A731F73FDC800E126AD /* AppDelegate.swift */; };
 		3F523A761F73FDC800E126AD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A751F73FDC800E126AD /* GameScene.sks */; };
@@ -17,14 +16,13 @@
 		3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A7D1F73FDC800E126AD /* Main.storyboard */; };
 		3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A801F73FDC800E126AD /* Assets.xcassets */; };
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
-		3FC7AEC71F75CEA600BD89F6 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC7AEC61F75CEA600BD89F6 /* EnemyShip.png */; };
-		3FD41BD21F7EC626000A18F9 /* EnemySpawner.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD11F7EC626000A18F9 /* EnemySpawner.png */; };
+		3FD41BD41F7ED7CE000A18F9 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */; };
+		3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD51F7ED8F1000A18F9 /* Projectile.png */; };
 		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3F3ABF0B1F75A85B005BE785 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayerShip.png; sourceTree = "<group>"; };
-		3F46EC281F79A8710057280E /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3F4858311F7D3EDB00551510 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A701F73FDC800E126AD /* SolarStorm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarStorm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F523A731F73FDC800E126AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,8 +34,8 @@
 		3F523A801F73FDC800E126AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A831F73FDC800E126AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3FC7AEC61F75CEA600BD89F6 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
-		3FD41BD11F7EC626000A18F9 /* EnemySpawner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemySpawner.png; sourceTree = "<group>"; };
+		3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
+		3FD41BD51F7ED8F1000A18F9 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,9 +88,8 @@
 		3F6446951F7401D0008E4C26 /* ArtAssets */ = {
 			isa = PBXGroup;
 			children = (
-				3FD41BD11F7EC626000A18F9 /* EnemySpawner.png */,
-				3F46EC281F79A8710057280E /* Projectile.png */,
-				3FC7AEC61F75CEA600BD89F6 /* EnemyShip.png */,
+				3FD41BD51F7ED8F1000A18F9 /* Projectile.png */,
+				3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */,
 				3F3ABF0B1F75A85B005BE785 /* PlayerShip.png */,
 			);
 			path = ArtAssets;
@@ -158,13 +155,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FD41BD41F7ED7CE000A18F9 /* EnemyShip.png in Resources */,
 				3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */,
 				3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */,
-				3F46EC291F79A8710057280E /* Projectile.png in Resources */,
 				3F523A761F73FDC800E126AD /* GameScene.sks in Resources */,
 				3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */,
-				3FD41BD21F7EC626000A18F9 /* EnemySpawner.png in Resources */,
-				3FC7AEC71F75CEA600BD89F6 /* EnemyShip.png in Resources */,
+				3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */,
 				3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */,
 				3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */,
 				3F523A781F73FDC800E126AD /* Actions.sks in Resources */,

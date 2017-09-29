@@ -6,6 +6,19 @@
 //  Copyright © 2017 student. All rights reserved.
 //
 
+
+
+/*
+ TODO
+ 
+ Rob:
+ Movement bar
+ Level Change
+ 
+ James:
+ End Screen
+ */
+
 import SpriteKit
 import GameplayKit
 
@@ -154,6 +167,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let targetPoint = playerPoints[Int(arc4random_uniform(UInt32(playerPoints.count)))]
         
         enemy.position = CGPoint(x: targetPoint.x/10, y: targetPoint.y/10)
+        let angle = atan2(enemy.position.y - targetPoint.y, enemy.position.x - targetPoint.x) + CGFloat(Double.pi)
+        
+        enemy.zRotation = angle
         
         enemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemy.size.width/2, height: enemy.size.height/2))
         enemy.physicsBody?.isDynamic = true
