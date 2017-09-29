@@ -67,6 +67,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     
+    //score handlers
+    var enemiesDestroyed = 0
+    var enemiesEscaped = 0
+    
     //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
       
@@ -181,12 +185,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actionMove = SKAction.move(to: CGPoint(x: targetPoint.x, y: targetPoint.y), duration: TimeInterval(10))
         
+        //Can be uncommented along with full line to allow failing
+        /*
+        let loseAction = SKAction.run() {
+            self.enemiesEscaped += 1
+            
+            if(self.enemiesEscaped >= 5){
+                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                let gameOverScene = GameOverScene(size: self.size)
+                self.view?.presentScene(gameOverScene, transition: reveal)
+            }
+        }
+         */
+
         enemy.run(SKAction.sequence([actionMove, actionDelete]))
+        //enemy.run(SKAction.sequence([actionMove, loseAction, actionDelete]))
         
     }
     
     //Shoot bullet - James
-    //TODO: Make it smalelr so it doesn't hit enemies in other lanes
     func fireProjectile(){
         let center = CGPoint(x: 0, y: 0)
         
@@ -221,7 +238,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("Hit")
         projectile.removeFromParent()
         enemy.removeFromParent()
+        enemiesDestroyed += 1
     }
+    
 
 
     //Distance between two points - Robert
