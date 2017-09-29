@@ -56,6 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
+      
     
     override func sceneDidLoad() {
 
@@ -63,8 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
-
-        
      
         fillCGPoints(type: levelType)
         
@@ -152,17 +151,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //TODO: Invincibility at start so they can't get eliminated by spamming
     func createEnemy() -> Void{
         let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
-        enemy.position = CGPoint(x: 0, y: 0)
+        let targetPoint = playerPoints[Int(arc4random_uniform(UInt32(playerPoints.count)))]
         
-        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy.position = CGPoint(x: targetPoint.x/10, y: targetPoint.y/10)
+        
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemy.size.width/2, height: enemy.size.height/2))
         enemy.physicsBody?.isDynamic = true
         enemy.physicsBody?.categoryBitMask = PhysicsCategory.Enemy
         enemy.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
         enemy.physicsBody?.collisionBitMask = PhysicsCategory.None
         
         addChild(enemy)
-        
-        let targetPoint = playerPoints[Int(arc4random_uniform(UInt32(playerPoints.count)))]
         
         let actionMove = SKAction.move(to: CGPoint(x: targetPoint.x, y: targetPoint.y), duration: TimeInterval(10))
         
@@ -214,6 +213,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let xDistance = a.x - b.x
         let yDistance = a.y - b.y
         return CGFloat(sqrt((xDistance * yDistance) + (yDistance * yDistance)))
+    }
+    
+    //Move to new screen
+    func loadNextLevel(){
+        
     }
     
     //On touch, fire a projectile and get point
