@@ -21,13 +21,16 @@
  
  
  James:
- End Screen
- Score (preferred higher priority to allow for other triggers)
+ 
  
  DONE:
  Rob: 
  Movement Bar
  Bookends for semicircle
+ 
+ James:
+ End Screen
+ Score
  */
 
 import SpriteKit
@@ -82,6 +85,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //score handlers
     var enemiesDestroyed = 0
     var enemiesEscaped = 0
+    var destroyedLabel = SKLabelNode()
+    var escapedLabel = SKLabelNode()
+    
     
     //controls
     var movementBar = SKShapeNode()
@@ -117,10 +123,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
  */
         createPlayer()
+        createScore()
         //generateIndicators()
         createBar()
         
     }
+    
+    //James adds the SKLabelNodes for scoring
+    func createScore() ->Void{
+        destroyedLabel.position = CGPoint(x: 270, y: 250)
+        destroyedLabel.text = "Enemy Ships Destroyed: \(enemiesDestroyed)"
+        destroyedLabel.fontColor = SKColor.white
+        destroyedLabel.fontSize = 15
+        destroyedLabel.removeFromParent()
+        self.addChild(destroyedLabel)
+        
+        escapedLabel.position = CGPoint(x: 270, y: 230)
+        escapedLabel.text = "Enemy Ships Passed: \(enemiesEscaped)"
+        escapedLabel.fontColor = SKColor.white
+        escapedLabel.fontSize = 15
+        escapedLabel.removeFromParent()
+        self.addChild(escapedLabel)
+    }
+    
     func createBar() ->Void{
         movementBar = SKShapeNode(rectOf: CGSize(width: 20, height: 450), cornerRadius: 12)
         movementBar.position = CGPoint(x: 330, y: 0)
@@ -278,7 +303,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Enemy generation - James
     
-    //TODO: Invincibility at start so they can't get eliminated by spamming
     func createEnemy() -> Void{
         let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
         let targetPoint = playerPoints[Int(arc4random_uniform(UInt32(playerPoints.count)))]
@@ -299,20 +323,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMove = SKAction.move(to: CGPoint(x: targetPoint.x, y: targetPoint.y), duration: TimeInterval(10))
         
         //Can be uncommented along with full line to allow failing
-        /*
+        
         let loseAction = SKAction.run() {
             self.enemiesEscaped += 1
+            self.escapedLabel.text = "Enemy Ships Passed: \(self.enemiesEscaped)"
             
-            if(self.enemiesEscaped >= 5){
+            /*if(self.enemiesEscaped >= 5){
                 let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
                 let gameOverScene = GameOverScene(size: self.size)
                 self.view?.presentScene(gameOverScene, transition: reveal)
-            }
+            }*/
         }
-         */
-
-        enemy.run(SKAction.sequence([actionMove, actionDelete]))
-        //enemy.run(SKAction.sequence([actionMove, loseAction, actionDelete]))
+        
+        enemy.run(SKAction.sequence([actionMove, loseAction, actionDelete]))
         
     }
     
@@ -352,6 +375,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         projectile.removeFromParent()
         enemy.removeFromParent()
         enemiesDestroyed += 1
+        self.destroyedLabel.text = "Enemy Ships Destroyed: \(enemiesDestroyed)"
     }
     
 
