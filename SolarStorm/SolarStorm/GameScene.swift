@@ -12,11 +12,22 @@
  TODO
  
  Rob:
- Movement bar
- Level Change
+ Level Change - transitions
+ The point indicators are moved to generateIndicators(), called at end of fillCGPoints
+ That way we don't have to remember to call it.
+ Implemented an array to keep track of indicators for effects - pointIndicators
+ TransitionLevel and ChangeLevel stubbed out, no logic. 
+ Wanting to do a score transition to trigger them as easiest test.
+ 
  
  James:
  End Screen
+ Score (preferred higher priority to allow for other triggers)
+ 
+ DONE:
+ Rob: 
+ Movement Bar
+ Bookends for semicircle
  */
 
 import SpriteKit
@@ -44,9 +55,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //location of player
     var currentPos = 0
     
-    //initial level
+    //level handlers
     var levelType:String = "circle"
-    
+    var safePoints = [Bool]()
+    var pointIndicators: Array<SKSpriteNode> = Array()
     //swipe sensitivity
     let swipeWindow:CGFloat = 6
     
@@ -71,6 +83,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemiesDestroyed = 0
     var enemiesEscaped = 0
     
+    //controls
+    var movementBar = SKShapeNode()
+    var moveTouch:Bool = false
+    var loopable:Bool = true
+    var loadedLevel:String = ""
+    
     //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
       
@@ -81,10 +99,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
-     
+        //levelType = "semicircleBottom"
+        levelType = "circle"
         fillCGPoints(type: levelType)
         
+        
         //Debug of locations for representative points - sprites are placeholders
+        //Should place in a method
+    /*    for point in playerPoints{
+            let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
+            tempPlayer.xScale = 0.01
+            tempPlayer.yScale = 0.01
+            tempPlayer.position = point
+            tempPlayer.zPosition = 0
+            tempPlayer.name = "tempPlayer"
+            self.addChild(tempPlayer)
+        }
+ */
+        createPlayer()
+        //generateIndicators()
+        createBar()
+        
+    }
+    func createBar() ->Void{
+        movementBar = SKShapeNode(rectOf: CGSize(width: 20, height: 450), cornerRadius: 12)
+        movementBar.position = CGPoint(x: 330, y: 0)
+        movementBar.fillColor = UIColor.red
+        movementBar.strokeColor = UIColor.blue
+        movementBar.lineWidth = 2
+        movementBar.name = "moveBar"
+        self.addChild(movementBar)
+    }
+    func generateIndicators(){
+        for tempPlayer in pointIndicators{
+            tempPlayer.removeFromParent()
+        }
+        pointIndicators.removeAll()
+        //pointIndicators = Array<SKSpriteNode>(playerPoints.count)
         for point in playerPoints{
             let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
             tempPlayer.xScale = 0.01
@@ -92,16 +143,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             tempPlayer.position = point
             tempPlayer.zPosition = 0
             tempPlayer.name = "tempPlayer"
-            
+            pointIndicators.append(tempPlayer)
             self.addChild(tempPlayer)
         }
-        createPlayer()
-        
     }
     func getCenter() ->Void{
         //Header incase of need to get center of screen
         //centerPoint = CGPoint(x: (self.height/2), y: (self.width/2))
       //  centerPoint = CGPoint(x:200,y:200)
+    }
+    
+    func transitionLevel(nextLevel: String){
+        var currentLevel = loadedLevel
+        var next = nextLevel
+        if(currentLevel == "circle")
+        {
+            if(next == "semicircleBottom"){
+               //safe: 0/8-15. flash good
+                //flash 1-7 bad
+            }
+            //determine shared spaces
+            //color change
+            //start countdown
+        }
+        if(currentLevel == "semicircleBottom"){
+            if(next == "circle"){
+                //all points safe. flash good
+            }
+        }
+    }
+    
+    func changeLevel(nextLevel: String){
+        //check for death
+        fillCGPoints(type: nextLevel)
     }
     
     //Create player ship and set it appropriatley - Robert
@@ -136,7 +210,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Handles CGPoint generation for ship placement each level - Robert
     func fillCGPoints(type: String){
         playerPoints.removeAll()
+        safePoints.removeAll()
         if(type == "circle"){
+            //loopable = true
+            loadedLevel = "circle"
+            //16 distinct points
             playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
             playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
             playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
@@ -159,8 +237,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
             playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
             playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            /*for int in 0...15{
+                safePoints.append(false)
+            }*/
             
         }
+        if(type == "semicircleBottom"){
+            loadedLevel = "semicircleBottom"
+        
+
+            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            
+            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+           
+            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
+
+            //Ask Jefferson about doing it in one loop
+           /* print("Semicircle points:")
+            for int in 0...15{
+                if(int < 8){
+                    safePoints.append(false)
+                }
+                else{
+                    safePoints.append(true)
+                }
+                print("Point: \(safePoints[int])")
+            }*/
+            
+        }
+        generateIndicators()
     }
     
     //Enemy generation - James
@@ -262,6 +375,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             n.strokeColor = SKColor.green
             self.addChild(n)
         }*/
+
         lastTouch = pos
         fireProjectile()
     }
@@ -281,42 +395,73 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             n.strokeColor = SKColor.blue
             self.addChild(n)
          }*/
-
+        
         //Get Distance between points. If greater than swipe window, treat like a swipe
         let distanceBetween = distancePoints(a: pos, b: lastTouch!)
         if(distanceBetween > swipeWindow){
-            
-            //Use leftOfPlayer to evaluate direction of movement
-            if(lastTouch!.x < pos.x){
-                leftOfPlayer = false
-            }
-            else{
-                leftOfPlayer = true
-            }
-            //if left, rotate counter clockwise
-            if(leftOfPlayer){
-                if(currentPos < playerPoints.count){
+            if(moveTouch){
+                //Use leftOfPlayer to evaluate direction of movement
+            /*    if(lastTouch!.x < pos.x){
+                    leftOfPlayer = false
+                }
+                else{
+                    leftOfPlayer = true
+                }
+                //if left, rotate counter clockwise
+                if(leftOfPlayer){
+                    if(currentPos < playerPoints.count){
+                        currentPos = currentPos + 1
+                    }
+                    if(currentPos == playerPoints.count){
+                        currentPos = 0
+                    }
+                }
+                else{
+                    if(currentPos > 0){
+                        currentPos = currentPos - 1
+                    }
+                    if(currentPos == 0){
+                        currentPos = playerPoints.count - 1
+                    }
+                }*/
+                //Clockwise movement
+                if(lastTouch!.y < pos.y){//pos.y >= 0){
                     currentPos = currentPos + 1
+                    if loadedLevel == "circle"{
+                        if(currentPos == playerPoints.count){
+                            currentPos = 0
+                        }
+
+                    }
+                    if loadedLevel == "semicircleBottom"{
+                        if(currentPos >= playerPoints.count){
+                            currentPos = 8
+                        }
+                    }
+
+                }
+                //counterclockwise movement
+                else{
+                    currentPos = currentPos - 1
+                    if loadedLevel == "circle"{
+                        if(currentPos < 0){
+                            currentPos = playerPoints.count - 1
+                        }
+                    }
+                    if loadedLevel == "semicircleBottom"{
+                        if(currentPos < 0){
+                            currentPos = 0
+                        }
+                    }
                 }
                 if(currentPos == playerPoints.count){
-                    currentPos = 0
+                    currentPos = 0;
                 }
+                lastTouch = pos
+                print("Current pos: \(currentPos)")
+                movePlayer(newPoint: playerPoints[currentPos])
+                print("swipe?")
             }
-            else{
-                if(currentPos > 0){
-                    currentPos = currentPos - 1
-                }
-                if(currentPos == 0){
-                    currentPos = playerPoints.count - 1
-                }
-            }
-            if(currentPos == playerPoints.count){
-                currentPos = 0;
-            }
-            lastTouch = pos
-            print("Current pos: \(currentPos)")
-            movePlayer(newPoint: playerPoints[currentPos])
-            print("swipe?")
         }
         
     }
@@ -327,7 +472,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             n.strokeColor = SKColor.red
             self.addChild(n)
         }*/
-        
+        print("touch released")
+        moveTouch = false
         
         ///remove last touch
         
@@ -335,6 +481,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch: UITouch = (touches.first as? UITouch)!
+        let touchPos = touch.location(in: self)
+        let touchedNode = self.atPoint(_:touchPos)
+        if let name = touchedNode.name{
+            if name == "moveBar"{
+                print("touched bar")
+                moveTouch = true
+            }
+        }
        // if let label = self.label {
             //label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
       ///  }
