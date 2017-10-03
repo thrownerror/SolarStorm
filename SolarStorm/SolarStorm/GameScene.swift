@@ -88,6 +88,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var destroyedLabel = SKLabelNode()
     var escapedLabel = SKLabelNode()
     
+    var enemiesToChange = 0
+    
     
     //controls
     var movementBar = SKShapeNode()
@@ -106,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         //levelType = "semicircleBottom"
-        levelType = "circle"
+        levelType = "semicircleBottom"
         fillCGPoints(type: levelType)
         
         
@@ -179,6 +181,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func transitionLevel(nextLevel: String){
+        print("in transition level")
         var currentLevel = loadedLevel
         var next = nextLevel
         if(currentLevel == "circle")
@@ -186,6 +189,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(next == "semicircleBottom"){
                //safe: 0/8-15. flash good
                 //flash 1-7 bad
+                for index in 1...7{
+          //          print(index)
+                    //ask about why color isn't working
+                    //pointIndicators[index].color = .white
+                    //pointIndicators[index].colorBlendFactor = 0.8
+                    pointIndicators[index].xScale = 0.05
+                    pointIndicators[index].yScale = 0.05
+                }
             }
             //determine shared spaces
             //color change
@@ -199,8 +210,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func changeLevel(nextLevel: String){
-        //check for death
+        print("top of change level")
+        var currentLevel = loadedLevel
+        if(currentLevel == "circle"){
+            if(nextLevel == "semicircleBottom"){
+                if(currentPos >= 1 && currentPos <= 7){
+                    player.removeFromParent()
+                }
+                else{
+                    if(currentPos != 0){
+                        currentPos = currentPos - 8
+                    }
+                    else{
+                        currentPos = 8
+                    }
+                }
+            }
+        }
+        if(currentLevel == "semicircleBottom"){
+            if(nextLevel == "circle"){
+                if(currentPos != 8){
+                    currentPos = currentPos + 8
+                }
+                else{
+                    currentPos = 0
+                }
+            }
+        }
         fillCGPoints(type: nextLevel)
+        print("after fill points")
+        movePlayer(newPoint: playerPoints[currentPos])
+
     }
     
     //Create player ship and set it appropriatley - Robert
@@ -375,6 +415,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         projectile.removeFromParent()
         enemy.removeFromParent()
         enemiesDestroyed += 1
+        enemiesToChange += 1
         self.destroyedLabel.text = "Enemy Ships Destroyed: \(enemiesDestroyed)"
     }
     
@@ -537,7 +578,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
+        var levelChange = false
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
             self.lastUpdateTime = currentTime
@@ -559,6 +600,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             enemyTimer += 1
         }
+        if(enemiesToChange > 1){
+            if(loadedLevel == "circle"){
+                transitionLevel(nextLevel: "semicircleBottom")
+            }
+            if(loadedLevel == "semicircleBottom"){
+                transitionLevel(nextLevel: "cicle")
+            }
+        }
+        if(enemiesToChange > 3){
+            if(loadedLevel == "circle"){
+                changeLevel(nextLevel: "semicircleBottom")
+                levelChange = true
+                
+            }
+            if(loadedLevel == "semicircleBottom" && !levelChange){
+                changeLevel(nextLevel: "circle")
+            }
+            enemiesToChange = 0
+        }
+        
 
     
     }
