@@ -25,13 +25,13 @@ class GameOverScene: SKScene {
         addChild(label)
         
         //If uncommented it will return to the game scene after losing. Note Corrdinate system changes on reload
-        /*
+        
         run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run() {
             let reveal = SKTransition.flipVertical(withDuration: 0.5)
             let scene = GameScene(size: size)
             self.view?.presentScene(scene, transition:reveal)
             }]))
-         */
+        
         
     }
     
