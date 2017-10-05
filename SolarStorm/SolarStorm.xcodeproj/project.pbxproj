@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06E38A1F86741000F8F75B /* GameOverScene.swift */; };
 		3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4858311F7D3EDB00551510 /* Assets.xcassets */; };
 		3F523A741F73FDC800E126AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F523A731F73FDC800E126AD /* AppDelegate.swift */; };
 		3F523A761F73FDC800E126AD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A751F73FDC800E126AD /* GameScene.sks */; };
@@ -18,11 +19,11 @@
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
 		3FD41BD41F7ED7CE000A18F9 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */; };
 		3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD51F7ED8F1000A18F9 /* Projectile.png */; };
-		3FE0025F1F7EE92E00DD71B1 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE0025E1F7EE92E00DD71B1 /* GameOverScene.swift */; };
 		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F06E38A1F86741000F8F75B /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameOverScene.swift; path = SolarStorm/GameOverScene.swift; sourceTree = "<group>"; };
 		3F3ABF0B1F75A85B005BE785 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayerShip.png; sourceTree = "<group>"; };
 		3F4858311F7D3EDB00551510 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A701F73FDC800E126AD /* SolarStorm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarStorm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,7 +38,6 @@
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
 		3FD41BD51F7ED8F1000A18F9 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
-		3FE0025E1F7EE92E00DD71B1 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,7 +100,7 @@
 		3FE002601F7EE93600DD71B1 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				3FE0025E1F7EE92E00DD71B1 /* GameOverScene.swift */,
+				3F06E38A1F86741000F8F75B /* GameOverScene.swift */,
 				3F523A791F73FDC800E126AD /* GameScene.swift */,
 			);
 			name = Scenes;
@@ -185,9 +185,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FE0025F1F7EE92E00DD71B1 /* GameOverScene.swift in Sources */,
 				3F523A7A1F73FDC800E126AD /* GameScene.swift in Sources */,
 				3F523A7C1F73FDC800E126AD /* GameViewController.swift in Sources */,
+				3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */,
 				3F523A741F73FDC800E126AD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
