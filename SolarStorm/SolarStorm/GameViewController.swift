@@ -41,9 +41,21 @@ class GameViewController: UIViewController {
                 }
             }
         }
+        
+            //Current attempt at MainMenu loading
+            /*
+                super.viewDidLoad()
+                let scene = MainMenuScene(size: view.bounds.size)
+                let skView = view as! SKView
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.ignoresSiblingOrder = true
+                scene.scaleMode = .resizeFill
+                skView.presentScene(scene)
+            */
     }
-    
-    
+ 
+ 
     override var shouldAutorotate: Bool {
         return true
     }

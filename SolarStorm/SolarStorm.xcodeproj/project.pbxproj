@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06E38A1F86741000F8F75B /* GameOverScene.swift */; };
+		3F0A77CA1F8C102B00B93E9E /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */; };
 		3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4858311F7D3EDB00551510 /* Assets.xcassets */; };
 		3F523A741F73FDC800E126AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F523A731F73FDC800E126AD /* AppDelegate.swift */; };
 		3F523A761F73FDC800E126AD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A751F73FDC800E126AD /* GameScene.sks */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		3F06E38A1F86741000F8F75B /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameOverScene.swift; path = SolarStorm/GameOverScene.swift; sourceTree = "<group>"; };
+		3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		3F3ABF0B1F75A85B005BE785 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayerShip.png; sourceTree = "<group>"; };
 		3F4858311F7D3EDB00551510 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A701F73FDC800E126AD /* SolarStorm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarStorm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 		3FE002601F7EE93600DD71B1 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */,
 				3F06E38A1F86741000F8F75B /* GameOverScene.swift */,
 				3F523A791F73FDC800E126AD /* GameScene.swift */,
 			);
@@ -138,7 +141,7 @@
 				TargetAttributes = {
 					3F523A6F1F73FDC800E126AD = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 25YN25P748;
+						DevelopmentTeam = 66D9TZSAXL;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -185,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F0A77CA1F8C102B00B93E9E /* MainMenuScene.swift in Sources */,
 				3F523A7A1F73FDC800E126AD /* GameScene.swift in Sources */,
 				3F523A7C1F73FDC800E126AD /* GameViewController.swift in Sources */,
 				3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */,
@@ -313,11 +317,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 25YN25P748;
+				DEVELOPMENT_TEAM = 66D9TZSAXL;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -327,11 +331,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 25YN25P748;
+				DEVELOPMENT_TEAM = 66D9TZSAXL;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

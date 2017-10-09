@@ -21,6 +21,8 @@
  
  
  James:
+ Clean up end screen
+ Make Main Menu
  
  
  DONE:
@@ -253,7 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(nextLevel == "semicircleBottom"){
                 if(currentPos >= 1 && currentPos <= 7){
                     player.removeFromParent()
-                    self.endScreenTransition()
+                    self.endScreenTransition(win: false)
                 }
                 else{
                     if(currentPos != 0){
@@ -407,7 +409,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.escapedLabel.text = "Enemy Ships Passed: \(self.enemiesEscaped)"
             
             if(self.enemiesEscaped >= 5){
-                self.endScreenTransition()
+                self.endScreenTransition(win: false)
             }
         }
         
@@ -464,9 +466,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGFloat(sqrt((xDistance * yDistance) + (yDistance * yDistance)))
     }
     
-    func endScreenTransition(){
+    func endScreenTransition(win: Bool){
         let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-        let gameOverScene = GameOverScene(size: self.size)
+        let gameOverScene = GameOverScene(size: self.size, win: win, destroyed: self.enemiesDestroyed)
         self.view?.presentScene(gameOverScene, transition: reveal)
     }
     
