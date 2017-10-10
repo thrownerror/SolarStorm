@@ -10,6 +10,19 @@
 		3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06E38A1F86741000F8F75B /* GameOverScene.swift */; };
 		3F0A77CA1F8C102B00B93E9E /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */; };
 		3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4858311F7D3EDB00551510 /* Assets.xcassets */; };
+		3F4C5B551F8D8B2D0091DE57 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B541F8D8B2D0091DE57 /* EnemyShip.png */; };
+		3F4C5B571F8D8B410091DE57 /* PlayerShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B561F8D8B410091DE57 /* PlayerShip.png */; };
+		3F4C5B5B1F8D8B5D0091DE57 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B581F8D8B5D0091DE57 /* Icon-80.png */; };
+		3F4C5B5C1F8D8B5D0091DE57 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B591F8D8B5D0091DE57 /* Icon-152.png */; };
+		3F4C5B5D1F8D8B5D0091DE57 /* Icon-167.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B5A1F8D8B5D0091DE57 /* Icon-167.png */; };
+		3F4C5B611F8D8B640091DE57 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B5E1F8D8B640091DE57 /* Icon-40.png */; };
+		3F4C5B621F8D8B640091DE57 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B5F1F8D8B640091DE57 /* Icon-58.png */; };
+		3F4C5B631F8D8B640091DE57 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B601F8D8B640091DE57 /* Icon-76.png */; };
+		3F4C5B661F8D8B6B0091DE57 /* Icon-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B641F8D8B6B0091DE57 /* Icon-20.png */; };
+		3F4C5B671F8D8B6B0091DE57 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B651F8D8B6B0091DE57 /* Icon-29.png */; };
+		3F4C5B6D1F8D8BC30091DE57 /* Background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B6A1F8D8BC30091DE57 /* Background.mp3 */; };
+		3F4C5B6E1F8D8BC30091DE57 /* EnemyDeathSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B6B1F8D8BC30091DE57 /* EnemyDeathSound.mp3 */; };
+		3F4C5B6F1F8D8BC30091DE57 /* FireSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B6C1F8D8BC30091DE57 /* FireSound.mp3 */; };
 		3F523A741F73FDC800E126AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F523A731F73FDC800E126AD /* AppDelegate.swift */; };
 		3F523A761F73FDC800E126AD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A751F73FDC800E126AD /* GameScene.sks */; };
 		3F523A781F73FDC800E126AD /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A771F73FDC800E126AD /* Actions.sks */; };
@@ -18,7 +31,6 @@
 		3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A7D1F73FDC800E126AD /* Main.storyboard */; };
 		3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A801F73FDC800E126AD /* Assets.xcassets */; };
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
-		3FD41BD41F7ED7CE000A18F9 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */; };
 		3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD51F7ED8F1000A18F9 /* Projectile.png */; };
 		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
 /* End PBXBuildFile section */
@@ -26,8 +38,20 @@
 /* Begin PBXFileReference section */
 		3F06E38A1F86741000F8F75B /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameOverScene.swift; path = SolarStorm/GameOverScene.swift; sourceTree = "<group>"; };
 		3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
-		3F3ABF0B1F75A85B005BE785 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayerShip.png; sourceTree = "<group>"; };
 		3F4858311F7D3EDB00551510 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3F4C5B541F8D8B2D0091DE57 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
+		3F4C5B561F8D8B410091DE57 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayerShip.png; sourceTree = "<group>"; };
+		3F4C5B581F8D8B5D0091DE57 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = "<group>"; };
+		3F4C5B591F8D8B5D0091DE57 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
+		3F4C5B5A1F8D8B5D0091DE57 /* Icon-167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-167.png"; sourceTree = "<group>"; };
+		3F4C5B5E1F8D8B640091DE57 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
+		3F4C5B5F1F8D8B640091DE57 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = "<group>"; };
+		3F4C5B601F8D8B640091DE57 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		3F4C5B641F8D8B6B0091DE57 /* Icon-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-20.png"; sourceTree = "<group>"; };
+		3F4C5B651F8D8B6B0091DE57 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
+		3F4C5B6A1F8D8BC30091DE57 /* Background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Background.mp3; sourceTree = "<group>"; };
+		3F4C5B6B1F8D8BC30091DE57 /* EnemyDeathSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = EnemyDeathSound.mp3; sourceTree = "<group>"; };
+		3F4C5B6C1F8D8BC30091DE57 /* FireSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FireSound.mp3; sourceTree = "<group>"; };
 		3F523A701F73FDC800E126AD /* SolarStorm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarStorm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F523A731F73FDC800E126AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F523A751F73FDC800E126AD /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -38,7 +62,6 @@
 		3F523A801F73FDC800E126AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A831F73FDC800E126AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
 		3FD41BD51F7ED8F1000A18F9 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -54,6 +77,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F4C5B681F8D8BA30091DE57 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				3F4C5B6A1F8D8BC30091DE57 /* Background.mp3 */,
+				3F4C5B6B1F8D8BC30091DE57 /* EnemyDeathSound.mp3 */,
+				3F4C5B6C1F8D8BC30091DE57 /* FireSound.mp3 */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		3F4C5B691F8D8BAA0091DE57 /* AppIcons */ = {
+			isa = PBXGroup;
+			children = (
+				3F4C5B5E1F8D8B640091DE57 /* Icon-40.png */,
+				3F4C5B641F8D8B6B0091DE57 /* Icon-20.png */,
+				3F4C5B651F8D8B6B0091DE57 /* Icon-29.png */,
+				3F4C5B5F1F8D8B640091DE57 /* Icon-58.png */,
+				3F4C5B601F8D8B640091DE57 /* Icon-76.png */,
+				3F4C5B581F8D8B5D0091DE57 /* Icon-80.png */,
+				3F4C5B591F8D8B5D0091DE57 /* Icon-152.png */,
+				3F4C5B5A1F8D8B5D0091DE57 /* Icon-167.png */,
+			);
+			name = AppIcons;
+			sourceTree = "<group>";
+		};
 		3F523A671F73FDC800E126AD = {
 			isa = PBXGroup;
 			children = (
@@ -92,9 +140,11 @@
 		3F6446951F7401D0008E4C26 /* ArtAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3F4C5B691F8D8BAA0091DE57 /* AppIcons */,
+				3F4C5B681F8D8BA30091DE57 /* Sound */,
+				3F4C5B561F8D8B410091DE57 /* PlayerShip.png */,
 				3FD41BD51F7ED8F1000A18F9 /* Projectile.png */,
-				3FD41BD31F7ED7CE000A18F9 /* EnemyShip.png */,
-				3F3ABF0B1F75A85B005BE785 /* PlayerShip.png */,
+				3F4C5B541F8D8B2D0091DE57 /* EnemyShip.png */,
 			);
 			path = ArtAssets;
 			sourceTree = "<group>";
@@ -169,15 +219,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FD41BD41F7ED7CE000A18F9 /* EnemyShip.png in Resources */,
+				3F4C5B551F8D8B2D0091DE57 /* EnemyShip.png in Resources */,
+				3F4C5B631F8D8B640091DE57 /* Icon-76.png in Resources */,
+				3F4C5B6E1F8D8BC30091DE57 /* EnemyDeathSound.mp3 in Resources */,
+				3F4C5B5C1F8D8B5D0091DE57 /* Icon-152.png in Resources */,
+				3F4C5B661F8D8B6B0091DE57 /* Icon-20.png in Resources */,
+				3F4C5B6D1F8D8BC30091DE57 /* Background.mp3 in Resources */,
 				3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */,
+				3F4C5B5D1F8D8B5D0091DE57 /* Icon-167.png in Resources */,
+				3F4C5B571F8D8B410091DE57 /* PlayerShip.png in Resources */,
 				3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */,
 				3F523A761F73FDC800E126AD /* GameScene.sks in Resources */,
 				3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */,
 				3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */,
+				3F4C5B671F8D8B6B0091DE57 /* Icon-29.png in Resources */,
 				3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */,
+				3F4C5B611F8D8B640091DE57 /* Icon-40.png in Resources */,
 				3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */,
 				3F523A781F73FDC800E126AD /* Actions.sks in Resources */,
+				3F4C5B6F1F8D8BC30091DE57 /* FireSound.mp3 in Resources */,
+				3F4C5B5B1F8D8B5D0091DE57 /* Icon-80.png in Resources */,
+				3F4C5B621F8D8B640091DE57 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
