@@ -9,7 +9,7 @@
 
 
 /*
- TODO
+ TODO 
  
  Rob:
  Level Change - transitions
@@ -19,6 +19,7 @@
  TransitionLevel and ChangeLevel stubbed out, no logic.
  Wanting to do a score transition to trigger them as easiest test.
  
+ //TO DO Rob - add y pos tracker for movement feedback
  
  James:
  Clean up end screen
@@ -95,6 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //controls
     var movementBar = SKShapeNode()
+    var movementBar2 = SKShapeNode()
     var moveTouch:Bool = false
     var loopable:Bool = true
     var loadedLevel:String = ""
@@ -121,7 +123,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         //levelType = "semicircleBottom"
-        levelType = "semicircleBottom"
+        //levelType = "semicircleTop"
+        //levelType = "semicircleRight"
+        levelType = "semicircleLeft"
+        //levelType = "circle"
         fillCGPoints(type: levelType)
         
         
@@ -142,6 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             createScore()
             //generateIndicators()
             createBar()
+            createBar2()
             loadedAlready = true
         }
         
@@ -173,6 +179,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         movementBar.name = "moveBar"
         self.addChild(movementBar)
     }
+    func createBar2() ->Void{
+        movementBar2 = SKShapeNode(rectOf: CGSize(width: 20, height: 450), cornerRadius: 12)
+        movementBar2.position = CGPoint(x: -330, y: 0)
+        movementBar2.fillColor = UIColor.red
+        movementBar2.strokeColor = UIColor.blue
+        movementBar2.lineWidth = 2
+        movementBar2.name = "moveBar2"
+        self.addChild(movementBar2)
+    }
     
     func swellBar() ->Void{
         if(swellingPos){
@@ -193,6 +208,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         print(scaleModifier)
         movementBar.setScale(scaleModifier)
+        movementBar2.setScale(scaleModifier)
     }
     func generateIndicators(){
         for tempPlayer in pointIndicators{
@@ -230,11 +246,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //flash 1-7 bad
                 for index in 1...7{
                     //          print(index)
-                    //ask about why color isn't working
                     pointIndicators[index].color = .red
-                    //  pointIndicators[index].colorBlendFactor = 0.8
-                    //   pointIndicators[index].xScale = 0.05
-                    //   pointIndicators[index].yScale = 0.05
+                }
+            }
+            if(next == "semicircleTop"){
+                for index in 9...15{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "semicircleRight"){
+                for index in 5...11{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "semicircleLeft"){
+                for index in 0...15{
+                    if(index >= 13) || (index <= 3){
+                        pointIndicators[index].color = .red
+                    }
                 }
             }
             //determine shared spaces
@@ -242,8 +271,66 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //start countdown
         }
         if(currentLevel == "semicircleBottom"){
+            if(next == "semicircleTop"){
+                //impossible, player dies
+                //print("problem - bot to top semicircles")
+                for index in 1...7{
+                    pointIndicators[index].color = .red
+                }
+            }
             if(next == "circle"){
                 //all points safe. flash good
+            }
+            if(next == "semicircleLeft"){
+                for index in 5...8{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "semicircleRight"){
+                for index in 0...3{
+                    pointIndicators[index].color = .red
+                }
+            }
+            
+        }
+        if(currentLevel == "semicircleTop"){
+            if(next == "semicircleBottom"){
+                for index in 1...7{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "circle"){
+                //all clear
+            }
+            if(next == "semicircleLeft"){
+                for index in 0...3{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "semicircleRight"){
+                for index in 5...8{
+                    pointIndicators[index].color = .red
+                }
+            }
+        }
+        if(currentLevel == "semicircleLeft"){
+            if(next == "semicircleRight"){
+                for index in 1...7{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "semicircleTop"){
+                for index in 5...8{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "semicircleBottom"){
+                for index in 0...3{
+                    pointIndicators[index].color = .red
+                }
+            }
+            if(next == "circle"){
+                //all clear
             }
         }
     }
@@ -266,14 +353,182 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
+            if(nextLevel == "semicircleTop"){
+                if(currentPos >= 9 && currentPos <= 15){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }
+                //slight bug here - fix later
+                //else{
+                    //if(currentPos != 0){
+                    //     currentPos = currentPos - 8
+                    // }
+                    //else{
+                    //    currentPos = 8
+                    //}
+                //}
+            }
+            if(nextLevel == "semicircleRight"){
+                if(currentPos >= 5 && currentPos <= 11){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    if(currentPos >= 12){
+                        currentPos = currentPos - 12
+                    }
+                    else{
+                        currentPos = currentPos + 4
+                    }
+                }
+            }
+            if(nextLevel == "semicircleLeft"){
+                if(currentPos >= 13) || (currentPos <= 3){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos - 4
+                }
+            }
         }
         if(currentLevel == "semicircleBottom"){
+            if(nextLevel == "semicircleTop"){
+                if(currentPos != 8 && currentPos != 0){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }//else{
+                 //   if(currentPos == 0){
+                 //       currentPos = 8
+                 //   }else{
+                 //       currentPos = 0
+                 //   }
+                    
+                //}//nextLevel == "circle"
+            }
             if(nextLevel == "circle"){
                 if(currentPos != 8){
                     currentPos = currentPos + 8
                 }
                 else{
                     currentPos = 0
+                }
+            }
+            if(nextLevel == "semicircleLeft"){
+                if(currentPos >= 5 && currentPos <= 8){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos + 4
+                }
+            }
+            if(nextLevel == "semicircleRight"){
+                if(currentPos <= 3){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }
+                else{
+                    currentPos = currentPos - 4
+                }
+            }
+        }
+        if(currentLevel == "semicircleTop"){
+            if(nextLevel == "circle"){
+                //all okay
+            }
+            if(nextLevel == "semicircleBot"){
+                if(currentPos != 8 && currentPos != 0){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    if(currentPos == 0){
+                        currentPos = 8
+                    }
+                    if(currentPos == 8){
+                        currentPos = 0
+                    }
+                    
+                }
+            }
+            if(nextLevel == "semicircleLeft"){
+                if(currentPos <= 3){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos - 4
+                }
+            }
+            if(nextLevel == "semicircleRight"){
+                if(currentPos >= 5){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos + 4
+                }
+            }
+        }
+        if(currentLevel == "semicircleLeft"){
+            if(nextLevel == "circle"){
+                //good
+            }
+            if(nextLevel == "semicircleRight"){
+                if(currentPos != 0 && currentPos != 8){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    if(currentPos == 0){
+                        currentPos = 8
+                    }else{
+                        currentPos = 0
+                    }
+                }
+            }
+            if(nextLevel == "semicircleTop"){
+                if(currentPos >= 5){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos + 4
+                }
+            }
+        
+            if(nextLevel == "semicircleBottom"){
+                if(currentPos <= 3){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos - 4
+                }
+            }
+        }
+        if(currentLevel == "semicircleRight"){
+            if(nextLevel == "circle"){
+                //good
+            }
+            if(nextLevel == "semicircleLeft"){
+                if(currentPos != 0 && currentPos != 8){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    if(currentPos == 0){
+                        currentPos = 8
+                    }else{
+                        currentPos = 0
+                    }
+                }
+            }
+            if(nextLevel == "semicircleTop"){
+                if(currentPos <= 3){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos - 4
+                }
+            }
+            if(nextLevel == "semicircleBottom"){
+                if(currentPos >= 5){
+                    player.removeFromParent()
+                    self.endScreenTransition(win: false)
+                }else{
+                    currentPos = currentPos + 4
                 }
             }
         }
@@ -377,6 +632,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
              print("Point: \(safePoints[int])")
              }*/
             
+        }
+        if(type == "semicircleTop"){
+            loadedLevel = "semicircleTop"
+            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
+            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
+            
+            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
+        }
+        if(type == "semicircleRight"){
+            loadedLevel = "semicircleRight"
+            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
+            
+            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
+        }
+        if(type == "semicircleLeft"){
+            loadedLevel = "semicircleLeft"
+            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
+            
+            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
+            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
+            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
+            
+            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
         }
         generateIndicators()
     }
@@ -504,30 +806,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let distanceBetween = distancePoints(a: pos, b: lastTouch!)
         if(distanceBetween > swipeWindow){
             if(moveTouch){
-                //Use leftOfPlayer to evaluate direction of movement
-                /*    if(lastTouch!.x < pos.x){
-                 leftOfPlayer = false
-                 }
-                 else{
-                 leftOfPlayer = true
-                 }
-                 //if left, rotate counter clockwise
-                 if(leftOfPlayer){
-                 if(currentPos < playerPoints.count){
-                 currentPos = currentPos + 1
-                 }
-                 if(currentPos == playerPoints.count){
-                 currentPos = 0
-                 }
-                 }
-                 else{
-                 if(currentPos > 0){
-                 currentPos = currentPos - 1
-                 }
-                 if(currentPos == 0){
-                 currentPos = playerPoints.count - 1
-                 }
-                 }*/
                 //Clockwise movement
                 if(lastTouch!.y < pos.y){//pos.y >= 0){
                     currentPos = currentPos + 1
@@ -537,11 +815,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         }
                         
                     }
-                    if loadedLevel == "semicircleBottom"{
+                    if loadedLevel == "semicircleTop" || loadedLevel == "semicircleBottom" || loadedLevel == "semicircleLeft" || loadedLevel == "semicircleRight"{
                         if(currentPos >= playerPoints.count){
                             currentPos = 8
                         }
                     }
+                  //  if loadedLevel == "semicircleBottom"{
+                  //      if(currentPos >= playerPoints.count){
+                  //          currentPos = 8
+                  //      }
+                  //  }
                     
                 }
                     //counterclockwise movement
@@ -552,11 +835,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             currentPos = playerPoints.count - 1
                         }
                     }
-                    if loadedLevel == "semicircleBottom"{
+                    if loadedLevel == "semicircleTop" || loadedLevel == "semicircleBottom" || loadedLevel == "semicircleLeft" || loadedLevel == "semicircleRight"{
                         if(currentPos < 0){
                             currentPos = 0
                         }
                     }
+                   // if loadedLevel == "semicircleTop"{
+                   //     if(currentPos < 0 ){
+                   //         currentPos = 0
+                   //     }
+                   // }
                 }
                 if(currentPos == playerPoints.count){
                     currentPos = 0;
@@ -590,7 +878,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchPos = touch.location(in: self)
         let touchedNode = self.atPoint(_:touchPos)
         if let name = touchedNode.name{
-            if name == "moveBar"{
+            if name == "moveBar" || name == "moveBar2"{
                 print("touched bar")
                 moveTouch = true
             }
@@ -649,20 +937,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if(enemiesToChange > 1){
             if(loadedLevel == "circle"){
-                transitionLevel(nextLevel: "semicircleBottom")
+                transitionLevel(nextLevel: "semicircleLeft")
             }
-            if(loadedLevel == "semicircleBottom"){
-                transitionLevel(nextLevel: "cicle")
+            if(loadedLevel == "semicircleLeft"){
+                transitionLevel(nextLevel: "semicircleRight")
             }
+       //     if(loadedLevel == "semicircleBottom"){
+       //         transitionLevel(nextLevel: "semicircleTop")
+       //     }
+            
         }
         if(enemiesToChange > 3){
             if(loadedLevel == "circle"){
-                changeLevel(nextLevel: "semicircleBottom")
+                changeLevel(nextLevel: "semicircleLeft")
                 levelChange = true
                 
             }
             if(loadedLevel == "semicircleBottom" && !levelChange){
-                changeLevel(nextLevel: "circle")
+                changeLevel(nextLevel: "semicircleTop")
+                levelChange = true
+            }
+            if(loadedLevel == "semicircleLeft" && !levelChange){
+                changeLevel(nextLevel: "semicircleRight")
+                levelChange = true
             }
             enemiesToChange = 0
         }
