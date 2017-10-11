@@ -31,6 +31,7 @@
 		3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A7D1F73FDC800E126AD /* Main.storyboard */; };
 		3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A801F73FDC800E126AD /* Assets.xcassets */; };
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
+		3FCBFD601F8EB83400434821 /* PlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCBFD5F1F8EB83400434821 /* PlayerNode.swift */; };
 		3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD51F7ED8F1000A18F9 /* Projectile.png */; };
 		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
 		3FFC4E991F8EAAD600F325C6 /* BackgroundImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */; };
@@ -63,6 +64,7 @@
 		3F523A801F73FDC800E126AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F523A831F73FDC800E126AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FCBFD5F1F8EB83400434821 /* PlayerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerNode.swift; sourceTree = "<group>"; };
 		3FD41BD51F7ED8F1000A18F9 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
 		3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackgroundImage.jpg; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */,
 				3F06E38A1F86741000F8F75B /* GameOverScene.swift */,
 				3F523A791F73FDC800E126AD /* GameScene.swift */,
+				3FCBFD5F1F8EB83400434821 /* PlayerNode.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -194,7 +197,7 @@
 				TargetAttributes = {
 					3F523A6F1F73FDC800E126AD = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 66D9TZSAXL;
+						DevelopmentTeam = 25YN25P748;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -256,6 +259,7 @@
 			files = (
 				3F0A77CA1F8C102B00B93E9E /* MainMenuScene.swift in Sources */,
 				3F523A7A1F73FDC800E126AD /* GameScene.swift in Sources */,
+				3FCBFD601F8EB83400434821 /* PlayerNode.swift in Sources */,
 				3F523A7C1F73FDC800E126AD /* GameViewController.swift in Sources */,
 				3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */,
 				3F523A741F73FDC800E126AD /* AppDelegate.swift in Sources */,
@@ -383,11 +387,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66D9TZSAXL;
+				DEVELOPMENT_TEAM = 25YN25P748;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -397,11 +401,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66D9TZSAXL;
+				DEVELOPMENT_TEAM = 25YN25P748;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

@@ -9,26 +9,24 @@
 
 
 /*
- TODO 
+ TODO
  
  Rob:
- Level Change - transitions
- The point indicators are moved to generateIndicators(), called at end of fillCGPoints
- That way we don't have to remember to call it.
- Implemented an array to keep track of indicators for effects - pointIndicators
- TransitionLevel and ChangeLevel stubbed out, no logic.
- Wanting to do a score transition to trigger them as easiest test.
+ Level Change - transitional set up
  
  //TO DO Rob - add y pos tracker for movement feedback
  
  James:
- 
+
  
  
  DONE:
  Rob:
  Movement Bar
  Bookends for semicircle
+ Classing fadeInOut
+ Levels
+ 
  
  James:
  End Screen
@@ -81,7 +79,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //var player = SKSpriteNode(imageNamed:"PlayerShip.png")
     
     //player properties
-    var player = SKSpriteNode()
+    //var player = SKSpriteNode()
+    var player = PlayerNode()
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     
@@ -110,6 +109,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var loadedAlready = false
     //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
+    
+    //var testPlayer = PlayerNode()
     
     override func didMove(to view: SKView){
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -143,25 +144,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          }
          */
         if(!loadedAlready){
+            //createPlayer()
             
-            createPlayer()
             createScore()
             //generateIndicators()
             createBar()
             createBar2()
+            addChild(player)
+            player.movePlayer(newPoint: playerPoints[0])
+            //testPlayer.printPos()
+            
             loadedAlready = true
         }
-        
         let backgroundMusic = SKAudioNode(fileNamed: "Background.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
         let background = SKSpriteNode(imageNamed: "BackgroundImage")
-        background.position = CGPoint(x: 0, y: 0)
+        background.position = CGPoint(x: 0, y:0)
         background.zPosition = -1
-        //background.size(self.size)
         self.addChild(background)
-        
         
     }
     
@@ -372,12 +374,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 //slight bug here - fix later
                 //else{
-                    //if(currentPos != 0){
-                    //     currentPos = currentPos - 8
-                    // }
-                    //else{
-                    //    currentPos = 8
-                    //}
+                //if(currentPos != 0){
+                //     currentPos = currentPos - 8
+                // }
+                //else{
+                //    currentPos = 8
+                //}
                 //}
             }
             if(nextLevel == "semicircleRight"){
@@ -408,12 +410,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     player.removeFromParent()
                     self.endScreenTransition(win: false)
                 }//else{
-                 //   if(currentPos == 0){
-                 //       currentPos = 8
-                 //   }else{
-                 //       currentPos = 0
-                 //   }
-                    
+                //   if(currentPos == 0){
+                //       currentPos = 8
+                //   }else{
+                //       currentPos = 0
+                //   }
+                
                 //}//nextLevel == "circle"
             }
             if(nextLevel == "circle"){
@@ -501,7 +503,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     currentPos = currentPos + 4
                 }
             }
-        
+            
             if(nextLevel == "semicircleBottom"){
                 if(currentPos <= 3){
                     player.removeFromParent()
@@ -546,38 +548,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         fillCGPoints(type: nextLevel)
         print("after fill points")
-        movePlayer(newPoint: playerPoints[currentPos])
+        player.movePlayer(newPoint: playerPoints[currentPos])
         
     }
     
-    //Create player ship and set it appropriatley - Robert
-    func createPlayer() -> Void{
-        player = SKSpriteNode(imageNamed: "PlayerShip.png")
-        //Bug - starts tiny on center of screen - need to ask Jefferson
-        player.xScale = 0.01
-        player.yScale = 0.01
-        //player.position = playerPoints[0]
-        player.zPosition = 0
-        
-        
-        //let remove = SKAction.removeFromParent()
-        //let move = SKAction.move(to: <#T##CGPoint#>, duration: <#T##TimeInterval#>)
-        //    = SKAction.move(to: <#T##CGPoint#>, duration: <#T##TimeInterval#>)
-        // let moveAndRemove = SKAction.sequence([moveTargets,removeTargets])
-        
-        self.addChild(player)
-    }
-    
-    //Handles movement of player from one point to another - Robert
-    func movePlayer(newPoint: CGPoint){
-        player.xScale = 0.1
-        player.yScale = 0.1
-        player.position = newPoint
-        print("Player move func")
-        let angle = atan2(player.position.y - 0.0, player.position.x - 0.0)
-        let rotateAction = SKAction.rotate(toAngle: angle + CGFloat(Double.pi*0.5), duration: 0.0)
-        player.run(rotateAction)
-    }
+
     
     //Handles CGPoint generation for ship placement each level - Robert
     func fillCGPoints(type: String){
@@ -765,6 +740,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Projectile Collision - James
     func projectileCollision(projectile: SKSpriteNode, enemy: SKSpriteNode) {
+        //print("Hit")
         projectile.removeFromParent()
         enemy.removeFromParent()
         run(SKAction.playSoundFileNamed("EnemyDeathSound.mp3", waitForCompletion: false))
@@ -834,11 +810,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             currentPos = 8
                         }
                     }
-                  //  if loadedLevel == "semicircleBottom"{
-                  //      if(currentPos >= playerPoints.count){
-                  //          currentPos = 8
-                  //      }
-                  //  }
+                    //  if loadedLevel == "semicircleBottom"{
+                    //      if(currentPos >= playerPoints.count){
+                    //          currentPos = 8
+                    //      }
+                    //  }
                     
                 }
                     //counterclockwise movement
@@ -854,18 +830,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             currentPos = 0
                         }
                     }
-                   // if loadedLevel == "semicircleTop"{
-                   //     if(currentPos < 0 ){
-                   //         currentPos = 0
-                   //     }
-                   // }
+                    // if loadedLevel == "semicircleTop"{
+                    //     if(currentPos < 0 ){
+                    //         currentPos = 0
+                    //     }
+                    // }
                 }
                 if(currentPos == playerPoints.count){
                     currentPos = 0;
                 }
                 lastTouch = pos
                 print("Current pos: \(currentPos)")
-                movePlayer(newPoint: playerPoints[currentPos])
+                player.movePlayer(newPoint: playerPoints[currentPos])
                 print("swipe?")
                 swellingBar = false;
             }
@@ -956,9 +932,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(loadedLevel == "semicircleLeft"){
                 transitionLevel(nextLevel: "semicircleRight")
             }
-       //     if(loadedLevel == "semicircleBottom"){
-       //         transitionLevel(nextLevel: "semicircleTop")
-       //     }
+            //     if(loadedLevel == "semicircleBottom"){
+            //         transitionLevel(nextLevel: "semicircleTop")
+            //     }
             
         }
         if(enemiesToChange > 3){
