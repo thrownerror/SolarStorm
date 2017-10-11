@@ -31,6 +31,10 @@ class MainMenuScene: SKScene {
         label2.position = CGPoint(x: size.width/2, y: size.height/2 - 40)
         addChild(label2)
         
+        let backgroundMusic = SKAudioNode(fileNamed: "Background.mp3")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
+        
         
         
     }
@@ -43,7 +47,7 @@ class MainMenuScene: SKScene {
         
         run(SKAction.sequence([SKAction.run() {
             let reveal = SKTransition.flipVertical(withDuration: 0.5)
-            let scene = GameScene(size: self.size)
+            let scene = GameScene(size: CGSize(width: 750, height: 700))
             self.view?.presentScene(scene, transition:reveal)
             }]))
     }

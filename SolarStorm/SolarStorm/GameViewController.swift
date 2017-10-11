@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        /*super.viewDidLoad()
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
@@ -40,19 +40,18 @@ class GameViewController: UIViewController {
                     view.showsNodeCount = true
                 }
             }
-        }
+        }*/
         
-            //Current attempt at MainMenu loading
-            /*
-                super.viewDidLoad()
-                let scene = MainMenuScene(size: view.bounds.size)
-                let skView = view as! SKView
-                skView.showsFPS = true
-                skView.showsNodeCount = true
-                skView.ignoresSiblingOrder = true
-                scene.scaleMode = .resizeFill
-                skView.presentScene(scene)
-            */
+        //Current attempt at MainMenu loading
+        super.viewDidLoad()
+        let scene = MainMenuScene(size: view.bounds.size)
+        let skView = view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .resizeFill
+        skView.presentScene(scene)
+        
     }
  
  

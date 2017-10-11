@@ -22,8 +22,7 @@
  //TO DO Rob - add y pos tracker for movement feedback
  
  James:
- Clean up end screen
- Make Main Menu
+ 
  
  
  DONE:
@@ -34,6 +33,7 @@
  James:
  End Screen
  Score
+ Sounds
  */
 
 import SpriteKit
@@ -143,6 +143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          }
          */
         if(!loadedAlready){
+            
             createPlayer()
             createScore()
             //generateIndicators()
@@ -150,6 +151,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             createBar2()
             loadedAlready = true
         }
+        
+        let backgroundMusic = SKAudioNode(fileNamed: "Background.mp3")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
+        
+        let background = SKSpriteNode(imageNamed: "BackgroundImage")
+        background.position = CGPoint(x: 0, y: 0)
+        background.zPosition = -1
+        //background.size(self.size)
+        self.addChild(background)
+        
         
     }
     
@@ -729,6 +741,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         projectile.zRotation = angle
         
+        run(SKAction.playSoundFileNamed("FireSound.mp3", waitForCompletion: false))
+        
         let bullet = SKEmitterNode(fileNamed: "PlayerBullet")!
         bullet.position = center
         //let angle = atan2(bullet.po!!!!!!!!!!sition.y - (self.scene?.position.y)!, bullet.position.x - (self.scene?.position.x)!) + CGFloat(Double.pi)
@@ -751,9 +765,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Projectile Collision - James
     func projectileCollision(projectile: SKSpriteNode, enemy: SKSpriteNode) {
-        print("Hit")
         projectile.removeFromParent()
         enemy.removeFromParent()
+        run(SKAction.playSoundFileNamed("EnemyDeathSound.mp3", waitForCompletion: false))
         enemiesDestroyed += 1
         enemiesToChange += 1
         self.destroyedLabel.text = "Enemy Ships Destroyed: \(enemiesDestroyed)"

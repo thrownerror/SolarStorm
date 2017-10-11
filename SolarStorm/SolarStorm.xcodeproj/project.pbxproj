@@ -33,6 +33,7 @@
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
 		3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD51F7ED8F1000A18F9 /* Projectile.png */; };
 		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
+		3FFC4E991F8EAAD600F325C6 /* BackgroundImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FD41BD51F7ED8F1000A18F9 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
+		3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackgroundImage.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				3F4C5B691F8D8BAA0091DE57 /* AppIcons */,
 				3F4C5B681F8D8BA30091DE57 /* Sound */,
 				3F4C5B561F8D8B410091DE57 /* PlayerShip.png */,
+				3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */,
 				3FD41BD51F7ED8F1000A18F9 /* Projectile.png */,
 				3F4C5B541F8D8B2D0091DE57 /* EnemyShip.png */,
 			);
@@ -191,7 +194,7 @@
 				TargetAttributes = {
 					3F523A6F1F73FDC800E126AD = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 25YN25P748;
+						DevelopmentTeam = 66D9TZSAXL;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -234,6 +237,7 @@
 				3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */,
 				3F4C5B671F8D8B6B0091DE57 /* Icon-29.png in Resources */,
 				3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */,
+				3FFC4E991F8EAAD600F325C6 /* BackgroundImage.jpg in Resources */,
 				3F4C5B611F8D8B640091DE57 /* Icon-40.png in Resources */,
 				3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */,
 				3F523A781F73FDC800E126AD /* Actions.sks in Resources */,
@@ -379,11 +383,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 25YN25P748;
+				DEVELOPMENT_TEAM = 66D9TZSAXL;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -393,11 +397,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 25YN25P748;
+				DEVELOPMENT_TEAM = 66D9TZSAXL;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
