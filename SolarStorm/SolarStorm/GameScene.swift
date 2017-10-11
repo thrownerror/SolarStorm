@@ -110,6 +110,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
     
+    var testBoard:movementBoard?
+    
     //var testPlayer = PlayerNode()
     
     override func didMove(to view: SKView){
@@ -128,8 +130,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //levelType = "semicircleRight"
         levelType = "semicircleLeft"
         //levelType = "circle"
-        fillCGPoints(type: levelType)
+        //fillCGPoints(type: levelType)
         
+        
+
         
         //Debug of locations for representative points - sprites are placeholders
         //Should place in a method
@@ -145,13 +149,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          */
         if(!loadedAlready){
             //createPlayer()
-            
+            testBoard = movementBoard(type: "circle")
+            var indicatorCount:Int = (testBoard?.pointIndicators.count)!
+            for index in 0...indicatorCount{
+                self.addChild((testBoard?.pointIndicators[index])!)
+            }
             createScore()
             //generateIndicators()
             createBar()
             createBar2()
             addChild(player)
             player.movePlayer(newPoint: playerPoints[0])
+            
             //testPlayer.printPos()
             
             loadedAlready = true
