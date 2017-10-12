@@ -32,6 +32,7 @@
 		3F523A811F73FDC800E126AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A801F73FDC800E126AD /* Assets.xcassets */; };
 		3F523A841F73FDC800E126AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F523A821F73FDC800E126AD /* LaunchScreen.storyboard */; };
 		3FCBFD601F8EB83400434821 /* PlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCBFD5F1F8EB83400434821 /* PlayerNode.swift */; };
+		3FCBFD621F8EB95E00434821 /* movementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCBFD611F8EB95E00434821 /* movementBoard.swift */; };
 		3FD41BD61F7ED8F1000A18F9 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD41BD51F7ED8F1000A18F9 /* Projectile.png */; };
 		3FF0D2381F786FFB0057EA7C /* PlayerBullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */; };
 		3FFC4E991F8EAAD600F325C6 /* BackgroundImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */; };
@@ -65,6 +66,7 @@
 		3F523A831F73FDC800E126AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F523A851F73FDC800E126AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FCBFD5F1F8EB83400434821 /* PlayerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerNode.swift; sourceTree = "<group>"; };
+		3FCBFD611F8EB95E00434821 /* movementBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = movementBoard.swift; sourceTree = "<group>"; };
 		3FD41BD51F7ED8F1000A18F9 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3FF0D2371F786FFB0057EA7C /* PlayerBullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PlayerBullet.sks; sourceTree = "<group>"; };
 		3FFC4E981F8EAAD600F325C6 /* BackgroundImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackgroundImage.jpg; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				3F06E38A1F86741000F8F75B /* GameOverScene.swift */,
 				3F523A791F73FDC800E126AD /* GameScene.swift */,
 				3FCBFD5F1F8EB83400434821 /* PlayerNode.swift */,
+				3FCBFD611F8EB95E00434821 /* movementBoard.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F0A77CA1F8C102B00B93E9E /* MainMenuScene.swift in Sources */,
+				3FCBFD621F8EB95E00434821 /* movementBoard.swift in Sources */,
 				3F523A7A1F73FDC800E126AD /* GameScene.swift in Sources */,
 				3FCBFD601F8EB83400434821 /* PlayerNode.swift in Sources */,
 				3F523A7C1F73FDC800E126AD /* GameViewController.swift in Sources */,
