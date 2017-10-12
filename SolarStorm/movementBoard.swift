@@ -1,4 +1,4 @@
-//
+ //
 //  movementBoard.swift
 //  SolarStorm
 //
@@ -13,28 +13,32 @@ import GameplayKit
 class movementBoard{
     
     let circleRadius: Double
-    var activePos: Int
+    //var activePos: Int
     var levelType:String
     var pointIndicators: Array<SKSpriteNode> = Array()
-    var currentPos: Int
+    let levelOptions = ["circle", "semicircleLeft", "semicircleRight", "semicircleTop", "semicircleBot"]
+    //var currentPos: Int
     var playerPoints: [CGPoint] = []
     
     init(){
         circleRadius = 270
-        currentPos = 0
+        //currentPos = 0
         levelType = "circle"
-        activePos = 0
+        //activePos = 0
         fillCGPoints(type: levelType)
     }
     init(type: String){
         circleRadius = 270
-        currentPos = 0
+        //currentPos = 0
         levelType = type
-        activePos = 0
+        //activePos = 0
         fillCGPoints(type: levelType)
     }
     required init?(coder aDecoder: NSCoder){
         fatalError("init(coder:) has not been implemented")
+    }
+    func getRandomLevel() -> String{
+        return levelOptions[Int(arc4random_uniform(4))]
     }
     func generateIndicators(){
         for tempPlayer in pointIndicators{
@@ -55,8 +59,8 @@ class movementBoard{
             //self.addChild(tempPlayer)
         }
     }
-    func transitionLevel(nextLevel: String){
-        print("in transition level")
+    func transitionLevel(nextLevel: String) -> String{
+       // print("in transition level")
         var currentLevel = levelType
         var next = nextLevel
         if(currentLevel == "circle")
@@ -68,16 +72,19 @@ class movementBoard{
                     //          print(index)
                     pointIndicators[index].color = .red
                 }
+                return "semicircleBottom"
             }
             if(next == "semicircleTop"){
                 for index in 9...15{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleTop"
             }
             if(next == "semicircleRight"){
                 for index in 5...11{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleRight"
             }
             if(next == "semicircleLeft"){
                 for index in 0...15{
@@ -85,6 +92,7 @@ class movementBoard{
                         pointIndicators[index].color = .red
                     }
                 }
+                return "semicircleLeft"
             }
         }
         if(currentLevel == "semicircleBottom"){
@@ -94,19 +102,23 @@ class movementBoard{
                 for index in 1...7{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleTop"
             }
             if(next == "circle"){
                 //all points safe. flash good
+                return "circle"
             }
             if(next == "semicircleLeft"){
                 for index in 5...8{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleLeft"
             }
             if(next == "semicircleRight"){
                 for index in 0...3{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleRight"
             }
             
         }
@@ -115,19 +127,23 @@ class movementBoard{
                 for index in 1...7{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleBotom"
             }
             if(next == "circle"){
                 //all clear
+                return "circle"
             }
             if(next == "semicircleLeft"){
                 for index in 0...3{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleLeft"
             }
             if(next == "semicircleRight"){
                 for index in 5...8{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleRight"
             }
         }
         if(currentLevel == "semicircleLeft"){
@@ -135,30 +151,60 @@ class movementBoard{
                 for index in 1...7{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleRight"
             }
             if(next == "semicircleTop"){
                 for index in 5...8{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleTop"
             }
             if(next == "semicircleBottom"){
                 for index in 0...3{
                     pointIndicators[index].color = .red
                 }
+                return "semicircleBottom"
             }
             if(next == "circle"){
                 //all clear
+                return "circle"
             }
         }
+        if(currentLevel == "semicircleRight"){
+            if(next == "semicircleLeft"){
+                for index in 1...7{
+                    pointIndicators[index].color = .red
+                }
+                return "semicircleLeft"
+            }
+            if(next == "semicircleTop"){
+                for index in 0...3{
+                    pointIndicators[index].color = .red
+                }
+                return "semicircleTop"
+            }
+            if(next == "semicircleBottom"){
+                for index in 5...8{
+                    pointIndicators[index].color = .red
+                }
+                return "semicircleBottom"
+            }
+            if(next == "circle"){
+                //all clear
+                return "circle"
+            }
+        }
+        return "error"
 
     }
-    func changeLevel(nextLevel: String) -> Bool{
+    func changeLevel(nextLevel: String, playerPos: Int) -> Int{
         print("top of change level")
+        var currentPos = playerPos
         var currentLevel = levelType
         if(currentLevel == "circle"){
             if(nextLevel == "semicircleBottom"){
                 if(currentPos >= 1 && currentPos <= 7){
-                    return false
+                    currentPos = -1
                 }
                 else{
                     if(currentPos != 0){
@@ -171,7 +217,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleTop"){
                 if(currentPos >= 9 && currentPos <= 15){
-                    return false
+                    currentPos = -1
                 }
                 //slight bug here - fix later
                 //else{
@@ -185,7 +231,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleRight"){
                 if(currentPos >= 5 && currentPos <= 11){
-                        return false
+                    currentPos = -1
                 }else{
                     if(currentPos >= 12){
                         currentPos = currentPos - 12
@@ -197,7 +243,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleLeft"){
                 if(currentPos >= 13) || (currentPos <= 3){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos - 4
                 }
@@ -206,7 +252,7 @@ class movementBoard{
         if(currentLevel == "semicircleBottom"){
             if(nextLevel == "semicircleTop"){
                 if(currentPos != 8 && currentPos != 0){
-                    return false
+                    currentPos = -1
                 }//else{
                 //   if(currentPos == 0){
                 //       currentPos = 8
@@ -226,14 +272,14 @@ class movementBoard{
             }
             if(nextLevel == "semicircleLeft"){
                 if(currentPos >= 5 && currentPos <= 8){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos + 4
                 }
             }
             if(nextLevel == "semicircleRight"){
                 if(currentPos <= 3){
-                    return false
+                    currentPos = -1
                 }
                 else{
                     currentPos = currentPos - 4
@@ -246,7 +292,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleBot"){
                 if(currentPos != 8 && currentPos != 0){
-                    return false
+                    currentPos = -1
                 }else{
                     if(currentPos == 0){
                         currentPos = 8
@@ -259,14 +305,14 @@ class movementBoard{
             }
             if(nextLevel == "semicircleLeft"){
                 if(currentPos <= 3){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos - 4
                 }
             }
             if(nextLevel == "semicircleRight"){
                 if(currentPos >= 5){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos + 4
                 }
@@ -278,7 +324,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleRight"){
                 if(currentPos != 0 && currentPos != 8){
-                    return false
+                    currentPos = -1
                 }else{
                     if(currentPos == 0){
                         currentPos = 8
@@ -289,7 +335,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleTop"){
                 if(currentPos >= 5){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos + 4
                 }
@@ -297,7 +343,7 @@ class movementBoard{
             
             if(nextLevel == "semicircleBottom"){
                 if(currentPos <= 3){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos - 4
                 }
@@ -309,7 +355,7 @@ class movementBoard{
             }
             if(nextLevel == "semicircleLeft"){
                 if(currentPos != 0 && currentPos != 8){
-                    return false
+                    currentPos = -1
                 }else{
                     if(currentPos == 0){
                         currentPos = 8
@@ -320,22 +366,23 @@ class movementBoard{
             }
             if(nextLevel == "semicircleTop"){
                 if(currentPos <= 3){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos - 4
                 }
             }
             if(nextLevel == "semicircleBottom"){
                 if(currentPos >= 5){
-                    return false
+                    currentPos = -1
                 }else{
                     currentPos = currentPos + 4
                 }
             }
         }
-        return true
         fillCGPoints(type: nextLevel)
         print("after fill points")
+        return currentPos
+
         //player.movePlayer(newPoint: playerPoints[currentPos])
         
     }

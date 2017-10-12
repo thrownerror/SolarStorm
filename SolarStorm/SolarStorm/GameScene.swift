@@ -12,7 +12,6 @@
  TODO
  
  Rob:
- Level Change - transitional set up
  
  //TO DO Rob - add y pos tracker for movement feedback
  
@@ -98,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var movementBar2 = SKShapeNode()
     var moveTouch:Bool = false
     var loopable:Bool = true
-    var loadedLevel:String = ""
+    var loadedLevel:String = "circle"
     
     
     
@@ -107,11 +106,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scaleModifier:CGFloat = 1.0
     var swellingPos = true
     var loadedAlready = false
+    
+    var nextLevel = ""
+    var safeChange = 0
     //private var spinnyNode : SKShapeNode?
     //var centerPoint : CGPoint
-    
-    var testBoard:movementBoard?
-    
+    var indicators: Array<SKSpriteNode> = Array()
+    var playBoard:movementBoard?
+    var transitionStart = false
     //var testPlayer = PlayerNode()
     
     override func didMove(to view: SKView){
@@ -128,8 +130,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //levelType = "semicircleBottom"
         //levelType = "semicircleTop"
         //levelType = "semicircleRight"
-        levelType = "semicircleLeft"
-        //levelType = "circle"
+        //levelType = "semicircleLeft"
+        levelType = "circle"
         //fillCGPoints(type: levelType)
         
         
@@ -149,21 +151,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          */
         if(!loadedAlready){
             //createPlayer()
-            testBoard = movementBoard(type: "circle")
-            var indicatorCount:Int = (testBoard?.pointIndicators.count)!
-            for index in 0...indicatorCount{
-                self.addChild((testBoard?.pointIndicators[index])!)
-            }
+            playBoard = movementBoard(type: "circle")
+       //     var indicatorCount:Int = (testBoard?.pointIndicators.count)! - 1
+       //     for index in 0...indicatorCount{
+       //         self.addChild((testBoard?.pointIndicators[index])!)
+       //     }
+            getIndicies()
             createScore()
             //generateIndicators()
             createBar()
             createBar2()
             addChild(player)
-            player.movePlayer(newPoint: playerPoints[0])
+            player.movePlayer(newPoint: (playBoard?.playerPoints[0])!)
             
             //testPlayer.printPos()
             
             loadedAlready = true
+            loadedLevel = (playBoard?.levelType)!
         }
         let backgroundMusic = SKAudioNode(fileNamed: "Background.mp3")
         backgroundMusic.autoplayLooped = true
@@ -174,6 +178,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         self.addChild(background)
         
+    }
+    func getIndicies(){
+        for index in indicators{
+            index.removeFromParent()
+        }
+        indicators = (playBoard?.pointIndicators)!
+        for point in indicators{
+            self.addChild(point)
+        }
     }
     
     //James adds the SKLabelNodes for scoring
@@ -229,464 +242,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 swellingPos = true
             }
         }
-        print(scaleModifier)
+        //print(scaleModifier)
         movementBar.setScale(scaleModifier)
         movementBar2.setScale(scaleModifier)
     }
-    func generateIndicators(){
-        for tempPlayer in pointIndicators{
-            tempPlayer.removeFromParent()
-        }
-        pointIndicators.removeAll()
-        //pointIndicators = Array<SKSpriteNode>(playerPoints.count)
-        for point in playerPoints{
-            
-            let tempPlayer = SKSpriteNode(color: .blue, size: CGSize(width:5, height: 8))
-            //let tempPlayer = SKSpriteNode(imageNamed:"PlayerShip.png")
-            //tempPlayer.xScale = 0.01
-            // tempPlayer.yScale = 0.01
-            tempPlayer.position = point
-            tempPlayer.zPosition = 0
-            tempPlayer.name = "tempPlayer"
-            pointIndicators.append(tempPlayer)
-            self.addChild(tempPlayer)
-        }
-    }
-    func getCenter() ->Void{
-        //Header incase of need to get center of screen
-        //centerPoint = CGPoint(x: (self.height/2), y: (self.width/2))
-        //centerPoint = CGPoint(x:200,y:200)
-    }
-    
-    func transitionLevel(nextLevel: String){
-        print("in transition level")
-        var currentLevel = loadedLevel
-        var next = nextLevel
-        if(currentLevel == "circle")
-        {
-            if(next == "semicircleBottom"){
-                //safe: 0/8-15. flash good
-                //flash 1-7 bad
-                for index in 1...7{
-                    //          print(index)
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleTop"){
-                for index in 9...15{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleRight"){
-                for index in 5...11{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleLeft"){
-                for index in 0...15{
-                    if(index >= 13) || (index <= 3){
-                        pointIndicators[index].color = .red
-                    }
-                }
-            }
-            //determine shared spaces
-            //color change
-            //start countdown
-        }
-        if(currentLevel == "semicircleBottom"){
-            if(next == "semicircleTop"){
-                //impossible, player dies
-                //print("problem - bot to top semicircles")
-                for index in 1...7{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "circle"){
-                //all points safe. flash good
-            }
-            if(next == "semicircleLeft"){
-                for index in 5...8{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleRight"){
-                for index in 0...3{
-                    pointIndicators[index].color = .red
-                }
-            }
-            
-        }
-        if(currentLevel == "semicircleTop"){
-            if(next == "semicircleBottom"){
-                for index in 1...7{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "circle"){
-                //all clear
-            }
-            if(next == "semicircleLeft"){
-                for index in 0...3{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleRight"){
-                for index in 5...8{
-                    pointIndicators[index].color = .red
-                }
-            }
-        }
-        if(currentLevel == "semicircleLeft"){
-            if(next == "semicircleRight"){
-                for index in 1...7{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleTop"){
-                for index in 5...8{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "semicircleBottom"){
-                for index in 0...3{
-                    pointIndicators[index].color = .red
-                }
-            }
-            if(next == "circle"){
-                //all clear
-            }
-        }
-    }
-    
-    func changeLevel(nextLevel: String){
-        print("top of change level")
-        var currentLevel = loadedLevel
-        if(currentLevel == "circle"){
-            if(nextLevel == "semicircleBottom"){
-                if(currentPos >= 1 && currentPos <= 7){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }
-                else{
-                    if(currentPos != 0){
-                        currentPos = currentPos - 8
-                    }
-                    else{
-                        currentPos = 8
-                    }
-                }
-            }
-            if(nextLevel == "semicircleTop"){
-                if(currentPos >= 9 && currentPos <= 15){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }
-                //slight bug here - fix later
-                //else{
-                //if(currentPos != 0){
-                //     currentPos = currentPos - 8
-                // }
-                //else{
-                //    currentPos = 8
-                //}
-                //}
-            }
-            if(nextLevel == "semicircleRight"){
-                if(currentPos >= 5 && currentPos <= 11){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    if(currentPos >= 12){
-                        currentPos = currentPos - 12
-                    }
-                    else{
-                        currentPos = currentPos + 4
-                    }
-                }
-            }
-            if(nextLevel == "semicircleLeft"){
-                if(currentPos >= 13) || (currentPos <= 3){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos - 4
-                }
-            }
-        }
-        if(currentLevel == "semicircleBottom"){
-            if(nextLevel == "semicircleTop"){
-                if(currentPos != 8 && currentPos != 0){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }//else{
-                //   if(currentPos == 0){
-                //       currentPos = 8
-                //   }else{
-                //       currentPos = 0
-                //   }
-                
-                //}//nextLevel == "circle"
-            }
-            if(nextLevel == "circle"){
-                if(currentPos != 8){
-                    currentPos = currentPos + 8
-                }
-                else{
-                    currentPos = 0
-                }
-            }
-            if(nextLevel == "semicircleLeft"){
-                if(currentPos >= 5 && currentPos <= 8){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos + 4
-                }
-            }
-            if(nextLevel == "semicircleRight"){
-                if(currentPos <= 3){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }
-                else{
-                    currentPos = currentPos - 4
-                }
-            }
-        }
-        if(currentLevel == "semicircleTop"){
-            if(nextLevel == "circle"){
-                //all okay
-            }
-            if(nextLevel == "semicircleBot"){
-                if(currentPos != 8 && currentPos != 0){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    if(currentPos == 0){
-                        currentPos = 8
-                    }
-                    if(currentPos == 8){
-                        currentPos = 0
-                    }
-                    
-                }
-            }
-            if(nextLevel == "semicircleLeft"){
-                if(currentPos <= 3){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos - 4
-                }
-            }
-            if(nextLevel == "semicircleRight"){
-                if(currentPos >= 5){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos + 4
-                }
-            }
-        }
-        if(currentLevel == "semicircleLeft"){
-            if(nextLevel == "circle"){
-                //good
-            }
-            if(nextLevel == "semicircleRight"){
-                if(currentPos != 0 && currentPos != 8){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    if(currentPos == 0){
-                        currentPos = 8
-                    }else{
-                        currentPos = 0
-                    }
-                }
-            }
-            if(nextLevel == "semicircleTop"){
-                if(currentPos >= 5){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos + 4
-                }
-            }
-            
-            if(nextLevel == "semicircleBottom"){
-                if(currentPos <= 3){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos - 4
-                }
-            }
-        }
-        if(currentLevel == "semicircleRight"){
-            if(nextLevel == "circle"){
-                //good
-            }
-            if(nextLevel == "semicircleLeft"){
-                if(currentPos != 0 && currentPos != 8){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    if(currentPos == 0){
-                        currentPos = 8
-                    }else{
-                        currentPos = 0
-                    }
-                }
-            }
-            if(nextLevel == "semicircleTop"){
-                if(currentPos <= 3){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos - 4
-                }
-            }
-            if(nextLevel == "semicircleBottom"){
-                if(currentPos >= 5){
-                    player.removeFromParent()
-                    self.endScreenTransition(win: false)
-                }else{
-                    currentPos = currentPos + 4
-                }
-            }
-        }
-        fillCGPoints(type: nextLevel)
-        print("after fill points")
-        player.movePlayer(newPoint: playerPoints[currentPos])
-        
-    }
-    
 
-    
-    //Handles CGPoint generation for ship placement each level - Robert
-    func fillCGPoints(type: String){
-        playerPoints.removeAll()
-        safePoints.removeAll()
-        if(type == "circle"){
-            //loopable = true
-            loadedLevel = "circle"
-            //16 distinct points
-            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
-            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
-            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
-            
-            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            
-            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
-            /*for int in 0...15{
-             safePoints.append(false)
-             }*/
-            
-        }
-        if(type == "semicircleBottom"){
-            loadedLevel = "semicircleBottom"
-            
-            
-            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            
-            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
-            
-            //Ask Jefferson about doing it in one loop
-            /* print("Semicircle points:")
-             for int in 0...15{
-             if(int < 8){
-             safePoints.append(false)
-             }
-             else{
-             safePoints.append(true)
-             }
-             print("Point: \(safePoints[int])")
-             }*/
-            
-        }
-        if(type == "semicircleTop"){
-            loadedLevel = "semicircleTop"
-            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
-            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
-            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
-            
-            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
-        }
-        if(type == "semicircleRight"){
-            loadedLevel = "semicircleRight"
-            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:1*circleRadius, y:0 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
-            playerPoints.append(CGPoint(x:(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
-            
-            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
-        }
-        if(type == "semicircleLeft"){
-            loadedLevel = "semicircleLeft"
-            playerPoints.append(CGPoint(x: 0, y:1 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: ((sqrt(3)/2) * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: (sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:1/2 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-1*circleRadius, y:0 * circleRadius))
-            
-            playerPoints.append(CGPoint(x:-(sqrt(3)/2)*circleRadius, y:-1/2 * circleRadius))
-            playerPoints.append(CGPoint(x:-(sqrt(2)/2) * circleRadius, y: -(sqrt(2)/2 * circleRadius)))
-            playerPoints.append(CGPoint(x:-(1/2 * circleRadius), y: -((sqrt(3)/2) * circleRadius)))
-            
-            playerPoints.append(CGPoint(x: 0, y:-1 * circleRadius))
-        }
-        generateIndicators()
-    }
-    
     //Enemy generation - James
     
     func createEnemy() -> Void{
         let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
-        let targetPoint = playerPoints[Int(arc4random_uniform(UInt32(playerPoints.count)))]
+        let targetPoint = playBoard?.playerPoints[Int(arc4random_uniform(UInt32((playBoard?.playerPoints.count)!)))]
         
-        enemy.position = CGPoint(x: targetPoint.x/10, y: targetPoint.y/10)
-        let angle = atan2(enemy.position.y - targetPoint.y, enemy.position.x - targetPoint.x) + CGFloat(Double.pi)
+        enemy.position = CGPoint(x: (targetPoint?.x)!/10, y: (targetPoint?.y)!/10)
+        let angle = atan2(enemy.position.y - (targetPoint?.y)!, enemy.position.x - (targetPoint?.x)!) + CGFloat(Double.pi)
         
         enemy.zRotation = angle
         
@@ -698,7 +266,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(enemy)
         
-        let actionMove = SKAction.move(to: CGPoint(x: targetPoint.x, y: targetPoint.y), duration: TimeInterval(10))
+        let actionMove = SKAction.move(to: CGPoint(x: (targetPoint?.x)!, y: (targetPoint?.y)!), duration: TimeInterval(10))
         
         //Can be uncommented along with full line to allow failing
         
@@ -720,7 +288,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let center = CGPoint(x: 0, y: 0)
         
         let projectile = SKSpriteNode(imageNamed: "Projectile.png")
-        projectile.position = playerPoints[currentPos]
+        projectile.position = (playBoard?.playerPoints[currentPos])!
         let angle = atan2(projectile.position.y - 0, projectile.position.x - 0) + CGFloat(Double.pi)
         
         projectile.zRotation = angle
@@ -805,17 +373,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let distanceBetween = distancePoints(a: pos, b: lastTouch!)
         if(distanceBetween > swipeWindow){
             if(moveTouch){
+                print("movement pos: \(currentPos)")
                 //Clockwise movement
                 if(lastTouch!.y < pos.y){//pos.y >= 0){
                     currentPos = currentPos + 1
                     if loadedLevel == "circle"{
-                        if(currentPos == playerPoints.count){
+                        if(currentPos == playBoard!.playerPoints.count){
                             currentPos = 0
                         }
                         
                     }
                     if loadedLevel == "semicircleTop" || loadedLevel == "semicircleBottom" || loadedLevel == "semicircleLeft" || loadedLevel == "semicircleRight"{
-                        if(currentPos >= playerPoints.count){
+                        if(currentPos >= playBoard!.playerPoints.count){
                             currentPos = 8
                         }
                     }
@@ -831,7 +400,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     currentPos = currentPos - 1
                     if loadedLevel == "circle"{
                         if(currentPos < 0){
-                            currentPos = playerPoints.count - 1
+                            currentPos = playBoard!.playerPoints.count - 1
                         }
                     }
                     if loadedLevel == "semicircleTop" || loadedLevel == "semicircleBottom" || loadedLevel == "semicircleLeft" || loadedLevel == "semicircleRight"{
@@ -845,13 +414,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //     }
                     // }
                 }
-                if(currentPos == playerPoints.count){
+                if(currentPos == playBoard!.playerPoints.count){
                     currentPos = 0;
                 }
                 lastTouch = pos
                 print("Current pos: \(currentPos)")
-                player.movePlayer(newPoint: playerPoints[currentPos])
-                print("swipe?")
+                player.movePlayer(newPoint: (playBoard?.playerPoints[currentPos])!)
+                //print("swipe?")
                 swellingBar = false;
             }
         }
@@ -864,7 +433,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          n.strokeColor = SKColor.red
          self.addChild(n)
          }*/
-        print("touch released")
+        //print("touch released")
         moveTouch = false
         
         ///remove last touch
@@ -878,7 +447,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchedNode = self.atPoint(_:touchPos)
         if let name = touchedNode.name{
             if name == "moveBar" || name == "moveBar2"{
-                print("touched bar")
+                //print("touched bar")
                 moveTouch = true
             }
         }
@@ -934,33 +503,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             enemyTimer += 1
         }
-        if(enemiesToChange > 1){
-            if(loadedLevel == "circle"){
-                transitionLevel(nextLevel: "semicircleLeft")
-            }
-            if(loadedLevel == "semicircleLeft"){
-                transitionLevel(nextLevel: "semicircleRight")
-            }
+        if(enemiesToChange > 1 && !transitionStart){
+            print(nextLevel)
+            nextLevel = (playBoard?.getRandomLevel())!
+            playBoard?.transitionLevel(nextLevel: nextLevel)
+            transitionStart = true
+            //if(loadedLevel == "circle"){
+            //    playBoard?.transitionLevel(nextLevel: "semicircleLeft")
+           // }
+           // if(loadedLevel == "semicircleLeft"){
+           //     playBoard?.transitionLevel(nextLevel: "semicircleRight")
+           // }
             //     if(loadedLevel == "semicircleBottom"){
             //         transitionLevel(nextLevel: "semicircleTop")
             //     }
             
         }
-        if(enemiesToChange > 3){
-            if(loadedLevel == "circle"){
-                changeLevel(nextLevel: "semicircleLeft")
+        if(enemiesToChange > 2){
+            /*if(loadedLevel == "circle"){
+                safeChange = (playBoard?.changeLevel(nextLevel: "semicircleLeft", playerPos: currentPos))!
+                playBoard?.fillCGPoints(type: "semicircleLeft")
                 levelChange = true
                 
             }
             if(loadedLevel == "semicircleBottom" && !levelChange){
-                changeLevel(nextLevel: "semicircleTop")
+                safeChange = (playBoard?.changeLevel(nextLevel: "semicircleTop", playerPos: currentPos))!
                 levelChange = true
             }
             if(loadedLevel == "semicircleLeft" && !levelChange){
-                changeLevel(nextLevel: "semicircleRight")
+                safeChange = (playBoard?.changeLevel(nextLevel: "semicircleRight", playerPos: currentPos))!
                 levelChange = true
+            }*/
+            print("current pos \(currentPos)")
+            safeChange = (playBoard?.changeLevel(nextLevel: nextLevel, playerPos: currentPos))!
+            playBoard?.fillCGPoints(type: nextLevel)
+            if(safeChange < 0){
+                
+                safeChange = (playBoard?.changeLevel(nextLevel: nextLevel, playerPos: currentPos))!
+                player.removeFromParent()
+                self.endScreenTransition(win: false)
             }
+            currentPos = safeChange
+            print("current pos \(currentPos) post change")
+            print("After safe change")
+            getIndicies()
+            print("After get Indicies")
+            loadedLevel = (playBoard?.levelType)!
             enemiesToChange = 0
+            transitionStart = false
         }
         
         
