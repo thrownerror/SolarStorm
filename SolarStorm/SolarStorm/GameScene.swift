@@ -71,7 +71,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //enemy handlers
     var enemies: Array<SKSpriteNode> = Array()
-    var enemyTimer:Int = 0
+    var enemyTimer:Double = 0
+    var enemyDifficulty:Double = 0
     
     let actionDelete = SKAction.removeFromParent()
     
@@ -169,6 +170,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             loadedAlready = true
             loadedLevel = (playBoard?.levelType)!
         }
+        
+        //establishes background music and screen along with center particle
         let backgroundMusic = SKAudioNode(fileNamed: "Background.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
@@ -177,6 +180,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.position = CGPoint(x: 0, y:0)
         background.zPosition = -1
         self.addChild(background)
+        
+        let centerParticle = SKEmitterNode(fileNamed: "CenterParticle")!
+        centerParticle.position = CGPoint(x: 0, y: 0)
+        addChild(centerParticle)
+
         
     }
     func getIndicies(){
@@ -189,12 +197,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //James adds the SKLabelNodes for scoring
+    //James - Adds the SKLabelNodes for scoring
     func createScore() ->Void{
         destroyedLabel.position = CGPoint(x: 270, y: 250)
         destroyedLabel.text = "Enemy Ships Destroyed: \(enemiesDestroyed)"
         destroyedLabel.fontColor = SKColor.white
         destroyedLabel.fontSize = 15
+        destroyedLabel.fontName = "Maven Pro"
         destroyedLabel.removeFromParent()
         self.addChild(destroyedLabel)
         
@@ -202,6 +211,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         escapedLabel.text = "Enemy Ships Passed: \(enemiesEscaped)"
         escapedLabel.fontColor = SKColor.white
         escapedLabel.fontSize = 15
+        escapedLabel.fontName = "Maven Pro"
         escapedLabel.removeFromParent()
         self.addChild(escapedLabel)
     }
@@ -247,17 +257,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         movementBar2.setScale(scaleModifier)
     }
 
-    //Enemy generation - James
-    
+    //James - Enemy Creation Method
     func createEnemy() -> Void{
+        
+        //sets up sprite node
         let enemy = SKSpriteNode(imageNamed: "EnemyShip.png")
         let targetPoint = playBoard?.playerPoints[Int(arc4random_uniform(UInt32((playBoard?.playerPoints.count)!)))]
         
         enemy.position = CGPoint(x: (targetPoint?.x)!/10, y: (targetPoint?.y)!/10)
+        enemy.setScale(0.4)
         let angle = atan2(enemy.position.y - (targetPoint?.y)!, enemy.position.x - (targetPoint?.x)!) + CGFloat(Double.pi)
-        
         enemy.zRotation = angle
         
+        //establishes physics body for enemy to be used for collision with bullet
         enemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemy.size.width/2, height: enemy.size.height/2))
         enemy.physicsBody?.isDynamic = true
         enemy.physicsBody?.categoryBitMask = PhysicsCategory.Enemy
@@ -266,20 +278,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(enemy)
         
-        let actionMove = SKAction.move(to: CGPoint(x: (targetPoint?.x)!, y: (targetPoint?.y)!), duration: TimeInterval(10))
+        //sets up both movement and scaling action
+        let actionMove = SKAction.move(to: CGPoint(x: (targetPoint?.x)!, y: (targetPoint?.y)!), duration: TimeInterval(10 - (0.1 * enemyDifficulty)))
+        let actionScale = SKAction.scale(by: 3, duration: 7 - (0.1 * enemyDifficulty))
         
-        //Can be uncommented along with full line to allow failing
+        var actions = Array<SKAction>();
         
+        actions.append(actionMove);
+        actions.append(actionScale);
+        
+        let group = SKAction.group(actions);
+
+        //Ends game if too many enemies have escaped
         let loseAction = SKAction.run() {
             self.enemiesEscaped += 1
             self.escapedLabel.text = "Enemy Ships Passed: \(self.enemiesEscaped)"
             
             if(self.enemiesEscaped >= 5){
-                self.endScreenTransition(win: false)
+                self.endScreenTransition(phased: false)
             }
         }
         
-        enemy.run(SKAction.sequence([actionMove, loseAction, actionDelete]))
+        enemy.run(SKAction.sequence([group, loseAction, actionDelete]))
         
     }
     
@@ -315,9 +335,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         projectile.run(SKAction.sequence([actionMove, actionDelete]))
     }
     
-    //Projectile Collision - James
+    //James - Projectile collision with enemy
     func projectileCollision(projectile: SKSpriteNode, enemy: SKSpriteNode) {
-        //print("Hit")
         projectile.removeFromParent()
         enemy.removeFromParent()
         run(SKAction.playSoundFileNamed("EnemyDeathSound.mp3", waitForCompletion: false))
@@ -335,9 +354,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return CGFloat(sqrt((xDistance * yDistance) + (yDistance * yDistance)))
     }
     
-    func endScreenTransition(win: Bool){
+    func endScreenTransition(phased: Bool){
         let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-        let gameOverScene = GameOverScene(size: self.size, win: win, destroyed: self.enemiesDestroyed)
+        let gameOverScene = GameOverScene(size: self.size, phased: phased, destroyed: self.enemiesDestroyed)
         self.view?.presentScene(gameOverScene, transition: reveal)
     }
     
@@ -497,9 +516,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.lastUpdateTime = currentTime
         
-        if enemyTimer >= 180{
+        if enemyTimer >= (180 - enemyDifficulty){
             createEnemy()
             enemyTimer = 0
+            enemyDifficulty += 0.1
         } else {
             enemyTimer += 1
         }
@@ -541,7 +561,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 safeChange = (playBoard?.changeLevel(nextLevel: nextLevel, playerPos: currentPos))!
                 player.removeFromParent()
-                self.endScreenTransition(win: false)
+                self.endScreenTransition(phased: true)
             }
             currentPos = safeChange
             print("current pos \(currentPos) post change")

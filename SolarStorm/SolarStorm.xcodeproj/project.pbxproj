@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3F06E38B1F86741000F8F75B /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06E38A1F86741000F8F75B /* GameOverScene.swift */; };
 		3F0A77CA1F8C102B00B93E9E /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */; };
+		3F30DB6A1F914A740047E492 /* CenterParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3F30DB691F914A740047E492 /* CenterParticle.sks */; };
+		3F30DB6C1F9151A10047E492 /* MavenPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F30DB6B1F914BD10047E492 /* MavenPro-Regular.ttf */; };
 		3F4858331F7D3EDB00551510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4858311F7D3EDB00551510 /* Assets.xcassets */; };
 		3F4C5B551F8D8B2D0091DE57 /* EnemyShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B541F8D8B2D0091DE57 /* EnemyShip.png */; };
 		3F4C5B571F8D8B410091DE57 /* PlayerShip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C5B561F8D8B410091DE57 /* PlayerShip.png */; };
@@ -41,6 +43,8 @@
 /* Begin PBXFileReference section */
 		3F06E38A1F86741000F8F75B /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameOverScene.swift; path = SolarStorm/GameOverScene.swift; sourceTree = "<group>"; };
 		3F0A77C91F8C102B00B93E9E /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		3F30DB691F914A740047E492 /* CenterParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CenterParticle.sks; sourceTree = "<group>"; };
+		3F30DB6B1F914BD10047E492 /* MavenPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenPro-Regular.ttf"; sourceTree = "<group>"; };
 		3F4858311F7D3EDB00551510 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F4C5B541F8D8B2D0091DE57 /* EnemyShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyShip.png; sourceTree = "<group>"; };
 		3F4C5B561F8D8B410091DE57 /* PlayerShip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayerShip.png; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 		3F6446951F7401D0008E4C26 /* ArtAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3F30DB6B1F914BD10047E492 /* MavenPro-Regular.ttf */,
+				3F30DB691F914A740047E492 /* CenterParticle.sks */,
 				3F4C5B691F8D8BAA0091DE57 /* AppIcons */,
 				3F4C5B681F8D8BA30091DE57 /* Sound */,
 				3F4C5B561F8D8B410091DE57 /* PlayerShip.png */,
@@ -200,7 +206,7 @@
 				TargetAttributes = {
 					3F523A6F1F73FDC800E126AD = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 25YN25P748;
+						DevelopmentTeam = 66D9TZSAXL;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -228,10 +234,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F30DB6C1F9151A10047E492 /* MavenPro-Regular.ttf in Resources */,
 				3F4C5B551F8D8B2D0091DE57 /* EnemyShip.png in Resources */,
 				3F4C5B631F8D8B640091DE57 /* Icon-76.png in Resources */,
 				3F4C5B6E1F8D8BC30091DE57 /* EnemyDeathSound.mp3 in Resources */,
 				3F4C5B5C1F8D8B5D0091DE57 /* Icon-152.png in Resources */,
+				3F30DB6A1F914A740047E492 /* CenterParticle.sks in Resources */,
 				3F4C5B661F8D8B6B0091DE57 /* Icon-20.png in Resources */,
 				3F4C5B6D1F8D8BC30091DE57 /* Background.mp3 in Resources */,
 				3F523A7F1F73FDC800E126AD /* Main.storyboard in Resources */,
@@ -391,11 +399,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 25YN25P748;
+				DEVELOPMENT_TEAM = 66D9TZSAXL;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -405,11 +413,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 25YN25P748;
+				DEVELOPMENT_TEAM = 66D9TZSAXL;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

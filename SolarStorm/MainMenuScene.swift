@@ -11,7 +11,7 @@ import SpriteKit
 
 class MainMenuScene: SKScene {
     
-    override init(size: CGSize) {
+    init(size: CGSize, score: Int) {
         
         super.init(size: size)
                 
@@ -20,6 +20,7 @@ class MainMenuScene: SKScene {
         let label = SKLabelNode()
         label.fontSize = 100
         label.text = "SOLAR STORM"
+        label.fontName = "Maven Pro"
         label.fontColor = SKColor.red
         label.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(label)
@@ -27,14 +28,24 @@ class MainMenuScene: SKScene {
         let label2 = SKLabelNode()
         label2.fontSize = 40
         label2.text = "Tap to Start"
+        label2.fontName = "Maven Pro"
         label2.fontColor = SKColor.red
         label2.position = CGPoint(x: size.width/2, y: size.height/2 - 40)
         addChild(label2)
         
+        if score > 0 {
+            let label3 = SKLabelNode()
+            label3.fontSize = 40
+            label3.text = "Previous Session Score \(score)"
+            label3.fontName = "Maven Pro"
+            label3.fontColor = SKColor.red
+            label3.position = CGPoint(x: size.width/2, y: size.height/2 - 90)
+            addChild(label3)            
+        }
+        
         let backgroundMusic = SKAudioNode(fileNamed: "Background.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
-        
         
         
     }
