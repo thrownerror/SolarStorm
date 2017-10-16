@@ -206,7 +206,7 @@
 				TargetAttributes = {
 					3F523A6F1F73FDC800E126AD = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 66D9TZSAXL;
+						DevelopmentTeam = 25YN25P748;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -399,11 +399,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66D9TZSAXL;
+				DEVELOPMENT_TEAM = 25YN25P748;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.0.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -413,11 +413,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66D9TZSAXL;
+				DEVELOPMENT_TEAM = 25YN25P748;
 				INFOPLIST_FILE = SolarStorm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.1.SolarStorm;
+				PRODUCT_BUNDLE_IDENTIFIER = iosProj1.0.SolarStorm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
